@@ -22,7 +22,7 @@
 		//login.jsp에서 입력한 아이디값을 session내장객체 영역에 저장
 		session.setAttribute("id", id);
 		
-		response.sendRedirect("main.jsp");
+		response.sendRedirect("../main.jsp");
 	}else if(check == 0){
 	%>
 		<script type="text/javascript">
@@ -38,6 +38,13 @@
 		</script>
 	<%
 	}
+/* 	MemberBean b = new MemberBean();
+	System.out.println(b);
+	b.setId(request.getParameter("id"));
+	
+	System.out.println(b); */
+	
+	
 %>
 <jsp:useBean id="memberbean" class="member.MemberBean"/>
 <jsp:setProperty property="*" name="memberbean"/>
