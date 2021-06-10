@@ -10,7 +10,7 @@
 	 driverClassName="com.mysql.jdbc.Driver"
 	 type="javax.sql.DataSource"
 	 auth="Container"
-	 name="jdbc/mysql"
+	 name="jdbc/power"
 	/>
 
 
