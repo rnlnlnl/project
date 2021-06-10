@@ -22,7 +22,7 @@ public class MemberDAO {
 		Connection conn = null;
 		Context init = new InitialContext();
 		//커넥션플 얻기
-		DataSource ds = (DataSource)init.lookup("java:comp/jdbc/jspdb");
+		DataSource ds = (DataSource)init.lookup("java:comp/jdbc/power");
 		//커넥션플로부터 커넥션 객체 얻기
 		conn = ds.getConnection();
 		
@@ -52,7 +52,6 @@ public class MemberDAO {
 		int check = 1;	// 1->아이디 , 비밀번호 DB에 존재
 						// 0->아이디 맞음 , 비밀번호 틀림
 						// -1->아이디 틀림 
-		
 		try {
 			//커넥션플로 부터 커넥션얻기(DB접속)
 			conn = getConnection();
@@ -83,7 +82,36 @@ public class MemberDAO {
 		return check;
 	}
 	
-	
+	public String nickname(String id, String pw){
+		
+		String nickname = "";
+		
+		try {
+			//커넥션플로 부터 커넥션얻기(DB접속)
+			conn = getConnection();
+			//SELECT 문장 만들기 id에 해당하는 레코드 검색
+			sql = "select * from power where id = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, id);
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				if (pw.equals(rs.getString("pw"))) {
+					nickname = rs.getString("nickname"); // 로그인
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeAll(conn, pst, rs);
+		}
+		
+		return nickname;
+	}
 	
 	
 	

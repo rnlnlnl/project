@@ -17,11 +17,12 @@
 	MemberDAO memberdao = new MemberDAO();
 	
 	int check = memberdao.userCheck(id, pw);
+	String nickname = memberdao.nickname(id, pw);
 	
 	if(check == 1){
 		//login.jsp에서 입력한 아이디값을 session내장객체 영역에 저장
 		session.setAttribute("id", id);
-		
+		session.setAttribute("nickname", nickname);
 		response.sendRedirect("../main.jsp");
 	}else if(check == 0){
 	%>
