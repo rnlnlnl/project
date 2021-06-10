@@ -37,7 +37,7 @@
 			history.back();
 		</script>
 	<%
-	}
+	} 
 %>
 <jsp:useBean id="memberbean" class="member.MemberBean"/>
 <jsp:setProperty property="*" name="memberbean"/>
