@@ -13,7 +13,7 @@
 %>
 
 <script type="text/javascript">
-	alter("로그아웃 하셧습니다.");
+	alert("로그아웃 하셧습니다.");
 	location.href="../main.jsp";
 </script>
 	
