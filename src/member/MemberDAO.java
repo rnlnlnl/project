@@ -22,7 +22,7 @@ public class MemberDAO {
 		Connection conn = null;
 		Context init = new InitialContext();
 		//커넥션플 얻기
-		DataSource ds = (DataSource)init.lookup("java:comp/jdbc/power");
+		DataSource ds = (DataSource)init.lookup("java:comp/env/jdbc/power");
 		//커넥션플로부터 커넥션 객체 얻기
 		conn = ds.getConnection();
 		
@@ -56,7 +56,7 @@ public class MemberDAO {
 			//커넥션플로 부터 커넥션얻기(DB접속)
 			conn = getConnection();
 			//SELECT 문장 만들기 id에 해당하는 레코드 검색
-			sql = "select * from power where id = ?";
+			sql = "select * from member where id = ?";
 			
 			pst = conn.prepareStatement(sql);
 			
@@ -90,7 +90,7 @@ public class MemberDAO {
 			//커넥션플로 부터 커넥션얻기(DB접속)
 			conn = getConnection();
 			//SELECT 문장 만들기 id에 해당하는 레코드 검색
-			sql = "select * from power where id = ?";
+			sql = "select * from member where id = ?";
 			
 			pst = conn.prepareStatement(sql);
 			
