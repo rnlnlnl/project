@@ -8,17 +8,29 @@
 <script type="text/javascript">
 	function fun1() {
 		var id = document.fr.id.value;
+		var idL = document.fr.id.value.length;
 		var pw = document.fr.pw.value;
 		var name = document.fr.name.vlaue;
 		var nickname = document.fr.nickname.value;
 		var age = document.fr.age.value;
 		var gender =  document.fr.gender[0].checked;
-		var gender1 =  document.fr.gender[1].checked;
+		var gender1 = document.fr.gender[1].checked;
 		var email = document.fr.email.value;
 		var addr1 = document.fr.addr1.value;
 		var addr2 = document.fr.addr2.value;
 		var addr3 = document.fr.addr3.value;
 		var tel = document.fr.tel.value;
+		
+		if (idL) {
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
