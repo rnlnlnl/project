@@ -46,7 +46,7 @@ public class MemberDAO {
 		}
 		
 	}
-	
+	// 아이디와 비밀번호가 DB에있을때 로그인
 	public int userCheck(String id, String pw){
 		
 		int check = 1;	// 1->아이디 , 비밀번호 DB에 존재
@@ -81,7 +81,7 @@ public class MemberDAO {
 		}
 		return check;
 	}
-	
+	// 로그인 했을때 nickname 리턴 해서 로그인 유지
 	public String nickname(String id, String pw){
 		
 		String nickname = "";
@@ -112,43 +112,64 @@ public class MemberDAO {
 		
 		return nickname;
 	}
+	// 회원가입
+	public void memberInsert(MemberBean mbeen){
 	
-	public String memberInsert(){
-		
 		try {
 			
 			conn = getConnection();
 			
-			sql = "insert into member values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			sql = "insert into member values(?,?,?,?,?,?,?,?,?,?,?,now())";
 			
 			pst = conn.prepareStatement(sql);
 			
-			pst.setString(1, "id");
-			pst.setString(2, "pw");
-			pst.setString(3, "name");
-			pst.setString(4, "nickname");
-			pst.setString(5, "");
-			pst.setString(6, "");
-			pst.setString(7, "");
-			pst.setString(8, "");
-			pst.setString(9, "");
-			pst.setString(10, "");
-			pst.setString(11, "");
-			pst.setString(12, "");
+			pst.setString(1, mbeen.getId());
+			pst.setString(2, mbeen.getPw());
+			pst.setString(3, mbeen.getName());
+			pst.setString(4, mbeen.getNickname());
+			pst.setInt(5, mbeen.getAge());
+			pst.setString(6, mbeen.getGender());
+			pst.setString(7, mbeen.getEmail());
+			pst.setString(8, mbeen.getAddr1());
+			pst.setString(9, mbeen.getAddr2());
+			pst.setString(10, mbeen.getAddr3());
+			pst.setString(11, mbeen.getTel());
+			
+			pst.executeUpdate();
 			
 		} catch (Exception e) {
-			
+			System.out.println("회원가입 에러!"+e);
 		}finally {
 			closeAll(conn, pst, rs);
 		}
-		
-		
-		
-		
-		
-		return null;
 	}
 	
-	
+	//아이디 중복 검사
+	public int idCheck(String id){
+		int check = 0;
+		try {
+			conn = getConnection();
+			
+			sql = "select id from member where id = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, id);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				check = 1;
+			}else{
+				check = 0;
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println("아이디 중복검사에서 오류");
+		}
+		
+		return check;
+	}
 
 }

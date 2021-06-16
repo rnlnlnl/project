@@ -7,8 +7,39 @@
 <title>회원가입</title>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-
-	function fun1() {
+	
+	$("#id").blur(function() {
+		var id = document.fr.id.value;
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/idCheck.jsp",
+			data: ({
+				id: document.fr.id.value
+			}),
+			dataType: "text",
+			success: function (check) {
+				if (check == 0) {
+					$("#idCheck").css("color","green");
+					$("#idCheck").text("사용가능한 아이디 입니다.");
+				}else if(check == 1){
+					$("#idCheck").css("color","red");
+					$("#idCheck").text("사용불가능한 아이디입니다.");
+				}
+			}
+			
+		});
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function join() {
 		
 		var id = document.fr.id.value;
 		var idl = document.fr.id.value.length;
@@ -152,9 +183,12 @@
 	
 	<fieldset>
 		<legend>회원가입</legend>
-		<form action="joinPro.jsp" method="post" name="fr" onsubmit="return fun1();">
+		<form action="joinPro.jsp" method="post" name="fr" onsubmit="return join();">
+		  <div>	
 			<label>아이디</label>
-			<input type="text" name="id" id="id" required><br>
+			<input type="text" name="id" id="id" required>
+			<span id="idCheck" name="idCheck">&nbsp;</span><br>
+		  </div>
 			<label>비밀번호</label>
 			<input type="password" name="pw" id="pw" required><br>
 			<label>비밀번호 확인</label>
