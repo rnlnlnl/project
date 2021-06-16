@@ -113,7 +113,41 @@ public class MemberDAO {
 		return nickname;
 	}
 	
-	
+	public String memberInsert(){
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "insert into member values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, "id");
+			pst.setString(2, "pw");
+			pst.setString(3, "name");
+			pst.setString(4, "nickname");
+			pst.setString(5, "");
+			pst.setString(6, "");
+			pst.setString(7, "");
+			pst.setString(8, "");
+			pst.setString(9, "");
+			pst.setString(10, "");
+			pst.setString(11, "");
+			pst.setString(12, "");
+			
+		} catch (Exception e) {
+			
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		
+		
+		
+		
+		
+		return null;
+	}
 	
 	
 
