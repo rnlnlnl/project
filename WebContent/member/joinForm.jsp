@@ -1,3 +1,4 @@
+<%@page import="member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,34 +7,47 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원가입</title>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
+
 	
-	$("#id").blur(function() {
-		var id = document.fr.id.value;
+ 	function idChecked() {
 		
-		$.ajax({
+		var id = $("#id").val();
+		
+ 		$.ajax({
 			type: "post",
-			url: "${pageContext.request.contextPath}/idCheck.jsp",
+			url: "${pageContext.request.contextPath}/member/idCheck.do",
 			data: ({
-				id: document.fr.id.value
+				id: $("#id").val()
 			}),
 			dataType: "text",
-			success: function (check) {
-				if (check == 0) {
-					$("#idCheck").css("color","green");
-					$("#idCheck").text("사용가능한 아이디 입니다.");
-				}else if(check == 1){
-					$("#idCheck").css("color","red");
-					$("#idCheck").text("사용불가능한 아이디입니다.");
+			success: function (result) { 
+				console.log("뭐냐"+result);
+				if (result == 0) {
+					$("#idCheck").css("color", "green");
+	                $("#idCheck").text("사용가능한 아이디입니다.");
+				}else if(result == 1){
+					$("#idCheck").css("color", "red");
+		            $("#idCheck").text("이미 사용중인 아이디입니다.");
 				}
 			}
-			
-		});
+		});  
+ 	}
+	
+	
+	function checkpw() {
+		var pw = $("#pw").val();
+		var pw1 = $("#pw1").val();
 		
-	
-	
-	
-	
+		
+		if (pw != pw1 ) {
+			$("#passCheck").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		}else{
+			$("#passCheck").html("비밀번호가 동일합니다.").css("color","green");
+		}
+		
+	}
 	
 	
 	
@@ -183,25 +197,32 @@
 	
 	<fieldset>
 		<legend>회원가입</legend>
-		<form action="joinPro.jsp" method="post" name="fr" onsubmit="return join();">
+		<form action="joinPro.jsp" method="post" name="fr">
 		  <div>	
 			<label>아이디</label>
-			<input type="text" name="id" id="id" required>
-			<span id="idCheck" name="idCheck">&nbsp;</span><br>
+			<input type="text" name="id" id="id" onblur="idChecked();" required>
+			<span id="idCheck">&nbsp;</span><br>
 		  </div>
+		  
 			<label>비밀번호</label>
 			<input type="password" name="pw" id="pw" required><br>
 			<label>비밀번호 확인</label>
-			<input type="password" name="pw1" id="pw1" required><br>
+			<input type="password" name="pw1" id="pw1" onblur="checkpw();" required>
+			<span id="passCheck"></span><br>
+			
 			<label>이름</label>
 			<input type="text" name="name" id="name" required><br>
+			
 			<label>닉네임</label>
 			<input type="text" name="nickname" id="nickname" required><br>
+			
 			<label>나이</label>
 			<input type="text" name="age" id="age" required><br>
+			
 			<label>성별</label>
 			<input type="radio" name="gender" id="gender" value="남">남
 			<input type="radio" name="gender" id="gender" value="여">여<br>
+			
 			<label>이메일</label>
 			<input type="email" name="email" id="email" required><br>
 			
@@ -214,7 +235,7 @@
 			<label>전화번호</label>
 			<input type="text" name="tel" id="tel" placeholder="(-)을 넣어주세요. " required><br>
 			
-			<input type="submit" value="회원가입">
+			<input type="submit" value="회원가입" onclick="join()">
 			<input type="reset" value="초기화">
 		</form>
 	</fieldset>

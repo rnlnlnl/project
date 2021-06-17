@@ -3,12 +3,14 @@ package member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 public class MemberDAO {
+	
 	
 	Connection conn = null;
 	PreparedStatement pst = null;
@@ -164,12 +166,62 @@ public class MemberDAO {
 				check = 0;
 			}
 			
-			
 		} catch (Exception e) {
 			System.out.println("아이디 중복검사에서 오류");
 		}
-		
+		System.out.println(check+"DAO");
 		return check;
 	}
+	
+	
+	// 내정보 가지고 오기
+	public ArrayList getMyPage(String id){
+		
+		ArrayList list = new ArrayList();
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select id, name, nickname, age, add1, add2, add3, tel from member where id = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, id);
+			
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				MemberBean beanList = new MemberBean();
+				
+				beanList.setId(rs.getString("id"));
+				beanList.setName(rs.getString("name"));
+				beanList.setNickname(rs.getString("nickname"));
+				beanList.setAge(rs.getInt("age"));
+				beanList.setEmail(rs.getString("email"));
+				beanList.setAddr1(rs.getString("add1"));
+				beanList.setAddr2(rs.getString("add2"));
+				beanList.setAddr3(rs.getString("add3"));
+				beanList.setTel(rs.getString("tel"));
+				
+				list.add(beanList);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("내정보변경에서 오류.");
+		}finally{
+			closeAll(conn, pst, rs);
+		}
+
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }

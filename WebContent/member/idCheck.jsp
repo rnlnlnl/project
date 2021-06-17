@@ -13,12 +13,17 @@
 	
 	String id = request.getParameter("id");
 	
-	MemberDAO mDAO = new MemberDAO();
-	int check = mDAO.idCheck(id);
+	System.out.println(id);
 	
+	MemberDAO mDAO = new MemberDAO();
+	
+	int check = mDAO.idCheck(id);
+	System.out.println(check+"check");
+	response.sendRedirect("./joinForm");
 %>
 
-
+<jsp:useBean id="memberbean" class="member.MemberBean"/>
+<jsp:setProperty property="*" name="memberbean"/>
 
 
 </body>
