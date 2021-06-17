@@ -169,7 +169,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			System.out.println("아이디 중복검사에서 오류");
 		}
-		System.out.println(check+"DAO");
+		
 		return check;
 	}
 	
@@ -183,7 +183,7 @@ public class MemberDAO {
 			
 			conn = getConnection();
 			
-			sql = "select id, name, nickname, age, add1, add2, add3, tel from member where id = ?";
+			sql = "select * from member where id = ?";
 			
 			pst = conn.prepareStatement(sql);
 			
@@ -205,6 +205,7 @@ public class MemberDAO {
 				beanList.setTel(rs.getString("tel"));
 				
 				list.add(beanList);
+				
 			}
 			
 		} catch (Exception e) {
@@ -217,7 +218,44 @@ public class MemberDAO {
 		return list;
 	}
 	
-	
+	public void myPageUpdate(MemberBean beanList){
+		System.out.println(beanList.getId());
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select * from member where id =?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, beanList.getId());
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				
+				sql = "update member set age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
+				
+				pst = conn.prepareStatement(sql);
+				
+				pst.setInt(1, beanList.getAge());
+				pst.setString(2, beanList.getAddr1());
+				pst.setString(3, beanList.getAddr2());
+				pst.setString(4, beanList.getAddr3());
+				pst.setString(5, beanList.getTel());
+				pst.setString(6, beanList.getId());
+				
+				pst.executeUpdate();
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+
+	}
 	
 	
 	

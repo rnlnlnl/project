@@ -17,19 +17,21 @@
 		
  		$.ajax({
 			type: "post",
-			url: "${pageContext.request.contextPath}/member/idCheck.do",
+			url: "${pageContext.request.contextPath}/member/idCheck.jsp",
 			data: ({
 				id: $("#id").val()
 			}),
 			dataType: "text",
-			success: function (result) { 
-				console.log("뭐냐"+result);
-				if (result == 0) {
+			success: function (check) { 
+				console.log("뭐냐"+check);
+				if (check == 0) {
+					$("#idCheck").html("사용가능한 아이디입니다.");
 					$("#idCheck").css("color", "green");
-	                $("#idCheck").text("사용가능한 아이디입니다.");
-				}else if(result == 1){
+	                
+				}else if(check == 1){
+					$("#idCheck").html("이미 사용중인 아이디입니다.");
 					$("#idCheck").css("color", "red");
-		            $("#idCheck").text("이미 사용중인 아이디입니다.");
+		            
 				}
 			}
 		});  
@@ -201,7 +203,7 @@
 		  <div>	
 			<label>아이디</label>
 			<input type="text" name="id" id="id" onblur="idChecked();" required>
-			<span id="idCheck">&nbsp;</span><br>
+			<span id="idCheck"></span><br>
 		  </div>
 		  
 			<label>비밀번호</label>

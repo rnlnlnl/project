@@ -18,8 +18,10 @@
 	MemberDAO mDAO = new MemberDAO();
 	
 	int check = mDAO.idCheck(id);
-	System.out.println(check+"check");
-	response.sendRedirect("./joinForm");
+	%>
+	<%=check%>
+	<%
+//	response.sendRedirect("./joinForm");
 %>
 
 <jsp:useBean id="memberbean" class="member.MemberBean"/>
