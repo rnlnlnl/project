@@ -16,37 +16,37 @@
 	String nikename = (String)session.getAttribute("nickname");
 	
 	MemberDAO mDAO = new MemberDAO();
-	MemberBean beanList = new MemberBean();
+	MemberBean mbean = new MemberBean();
 	
 	ArrayList list = mDAO.getMyPage(id);
-	beanList = (MemberBean)list.get(0);
+	mbean = (MemberBean)list.get(0);
 %>
 	
 	<fieldset>
 		<legend>내정보 변경</legend>
 		<form action="updatePro.jsp" method="post" >
 			<label>아이디</label>
-			<input type="text" name="id" value="<%=beanList.getId()%>" readonly><br>
+			<input type="text" name="id" value="<%=mbean.getId()%>" readonly><br>
 			
 			<label>이름</label>
-			<input type="text" name="name" value="<%=beanList.getName()%>" readonly><br>
+			<input type="text" name="name" value="<%=mbean.getName()%>" readonly><br>
 			
 			<label>닉네임</label>
-			<input type="text" name="nickname" value="<%=beanList.getNickname()%>" readonly><br>
+			<input type="text" name="nickname" value="<%=mbean.getNickname()%>" readonly><br>
 			
 			<label>나이</label>
-			<input type="text" name="age" value="<%=beanList.getAge()%>"><br>
+			<input type="text" name="age" value="<%=mbean.getAge()%>"><br>
 			
 			<label>이메일</label>
-			<input type="text" name="email" value="<%=beanList.getEmail()%>" readonly><br>
+			<input type="text" name="email" value="<%=mbean.getEmail()%>" readonly><br>
 			
 			<label>주소</label>
-			<input type="text" name="addr1" value="<%=beanList.getAddr1()%>"><br>
-			<input type="text" name="addr2" value="<%=beanList.getAddr2()%>"><br>
-			<input type="text" name="addr3" value="<%=beanList.getAddr3()%>"><br>
+			<input type="text" name="addr1" value="<%=mbean.getAddr1()%>"><br>
+			<input type="text" name="addr2" value="<%=mbean.getAddr2()%>"><br>
+			<input type="text" name="addr3" value="<%=mbean.getAddr3()%>"><br>
 			
 			<label>전화번호</label>
-			<input type="text" name="tel" value="<%=beanList.getTel()%>"><br>
+			<input type="text" name="tel" value="<%=mbean.getTel()%>"><br>
 			
 			<input type="submit" value="변경하기">
 			<button><a href="../main.jsp">돌아가기</a></button>

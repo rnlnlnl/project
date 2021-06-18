@@ -218,17 +218,17 @@ public class MemberDAO {
 		return list;
 	}
 	
-	public void myPageUpdate(MemberBean beanList){
-		System.out.println(beanList.getId());
+	public void myPageUpdate(MemberBean mbean){
+		System.out.println(mbean.getId());
 		try {
 			
 			conn = getConnection();
 			
-			sql = "select * from member where id =?";
+			sql = "select id, name, nickname, age, email , add1 , add2, add3, tel from member where id =?";
 			
 			pst = conn.prepareStatement(sql);
 			
-			pst.setString(1, beanList.getId());
+			pst.setString(1, mbean.getId());
 			
 			rs = pst.executeQuery();
 			
@@ -238,12 +238,12 @@ public class MemberDAO {
 				
 				pst = conn.prepareStatement(sql);
 				
-				pst.setInt(1, beanList.getAge());
-				pst.setString(2, beanList.getAddr1());
-				pst.setString(3, beanList.getAddr2());
-				pst.setString(4, beanList.getAddr3());
-				pst.setString(5, beanList.getTel());
-				pst.setString(6, beanList.getId());
+				pst.setInt(1, mbean.getAge());
+				pst.setString(2, mbean.getAddr1());
+				pst.setString(3, mbean.getAddr2());
+				pst.setString(4, mbean.getAddr3());
+				pst.setString(5, mbean.getTel());
+				pst.setString(6, mbean.getId());
 				
 				pst.executeUpdate();
 				

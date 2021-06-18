@@ -7,18 +7,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>내정보 변경</title>
+<jsp:useBean id="mbean" class="member.MemberBean"/>
+<jsp:setProperty property="*" name="mbean"/>
 </head>
 <body>
-<jsp:useBean id="beanList" class="member.MemberBean"/>
-<jsp:getProperty property="*" name="beanList"/>
 <%
+	
 	request.setCharacterEncoding("UTF-8");
 	
 	MemberDAO mDAO = new MemberDAO();
 	
-	mDAO.myPageUpdate(beanList);
+	mDAO.myPageUpdate(mbean);
 	
-	response.sendRedirect("./main.jsp");
+	response.sendRedirect("../main.jsp");
 %>
 	
 	
