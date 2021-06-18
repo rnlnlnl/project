@@ -21,7 +21,7 @@
 	%>
 	<%=check%>
 	<%
-//	response.sendRedirect("./joinForm");
+	response.sendRedirect("./joinForm");
 %>
 
 <jsp:useBean id="memberbean" class="member.MemberBean"/>

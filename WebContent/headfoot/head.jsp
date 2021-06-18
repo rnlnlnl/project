@@ -27,11 +27,16 @@
 		<a href="./member/logout.jsp">로그아웃</a>
 	<%
 	}
-	
-	
 %>
 
-
+<nav>
+	<ul>
+		<li>거래소</li>
+		<li>이미지 계시판</li>
+		<li>자유계시판</li>
+		<li>공지사항</li>
+	</ul>
+</nav>
 
 
 
