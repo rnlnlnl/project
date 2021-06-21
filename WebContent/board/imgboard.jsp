@@ -9,7 +9,9 @@
 <body>
 <jsp:include page="../headfoot/head.jsp"/>
 <%	
+	request.setCharacterEncoding("UTF-8");
 	String id = (String)session.getAttribute("id");
+	String nickname = (String)session.getAttribute("nickname");
 	if(id != null){
 		
 %>		
