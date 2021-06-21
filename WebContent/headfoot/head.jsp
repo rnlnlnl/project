@@ -30,12 +30,9 @@
 %>
 
 <nav>
-	<ul>
-		<li>거래소</li>
-		<li>이미지 계시판</li>
-		<li>자유계시판</li>
-		<li>공지사항</li>
-	</ul>
+		<a href="./board/deal.jsp">거래소</a>
+		<a href="./board/imgboard.jsp">이미지 계시판</a>
+		<a href="./board/notice.jsp">공지사항</a>
 </nav>
 
 
