@@ -13,9 +13,10 @@
 </head>
 <body>
 <%
+	request.setCharacterEncoding("UTF-8");
 	String id = (String)session.getAttribute("id");
 	String nickname = (String)session.getAttribute("nickname");
-	System.out.print(nickname);
+	
 	if(id == null){
 	%>
 		<a href="./member/login.jsp">로그인</a>

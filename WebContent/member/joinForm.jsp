@@ -10,7 +10,10 @@
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 
-	
+	/* 
+		Ajax는 해당 페이지에 있는 값 자체를 가지고 오는 거라서 페이지를 비워주고 값만 나타나게 해줘야 한다
+		숫자를 가지고 오려면 datatype을 "text"로 하면 안된다
+	*/
  	function idChecked() {
 		
 		var id = $("#id").val();
@@ -21,16 +24,16 @@
 			data: ({
 				id: $("#id").val()
 			}),
-			dataType: "text",
-			success: function (check) { 
-				console.log("뭐냐"+check);
-				if (check == 0) {
+			
+			success: function (result) { 
+				console.log("뭐냐"+result);
+				if (result == 0) {
 					$("#idCheck").html("사용가능한 아이디입니다.");
 					$("#idCheck").css("color", "green");
 	                
-				}else if(check == 1){
+				}else if(result == 1){
 					$("#idCheck").html("이미 사용중인 아이디입니다.");
-					$("#idCheck").css("color", "red");
+					$("#idCheck").css("color", "red"); 
 		            
 				}
 			}
