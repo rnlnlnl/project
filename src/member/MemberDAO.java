@@ -173,6 +173,31 @@ public class MemberDAO {
 		return check;
 	}
 	
+	//nickname중복 검사
+	public int nickCheck(String nickname){
+		int check = 0;
+		try {
+			conn = getConnection();
+			
+			sql = "select nickname from member where nickname = ?";
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, nickname);
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				check = 1;
+			}else{
+				check = 0;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("nickname중복검사 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
+	
 	
 	// 내정보 가지고 오기
 	public ArrayList getMyPage(String id){

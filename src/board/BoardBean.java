@@ -13,9 +13,9 @@ public class BoardBean {
 	private int re_ref;
 	private int re_lev;
 	private int re_seq;
-	private Date date;
 	private String ip;
 	private String file;
+	private Date date;
 	public int getNum() {
 		return num;
 	}

@@ -40,6 +40,36 @@
 		});  
  	}
 	
+	function nickCheck() {
+		var nickname = $("#nickname").val();
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
+			data : ({
+				nickname: $("#nickname").val()
+			}),
+			success: function(check) {
+				if (check == 0) {
+					$("#nickCheck").html("사용가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "green");
+	                
+				}else if(check == 1){
+					$("#nickCheck").html("이미 사용중인 닉네임입니다.");
+					$("#nickCheck").css("color", "red"); 
+		            
+				}
+			}
+			
+		});
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	function checkpw() {
 		var pw = $("#pw").val();
@@ -103,7 +133,7 @@
 		}
 		
 		if (/^[0-9]{1,3}/.test(age) == false) {
-			alert("숫자를 적어주세요");
+			alert("나이는 숫자를 적어주세요");
 			document.fr.age.focus();
 			return false;
 		}
@@ -219,7 +249,8 @@
 			<input type="text" name="name" id="name" required><br>
 			
 			<label>닉네임</label>
-			<input type="text" name="nickname" id="nickname" required><br>
+			<input type="text" name="nickname" id="nickname" onblur="nickCheck();" required>
+			<span id="nickCheck"></span><br>
 			
 			<label>나이</label>
 			<input type="text" name="age" id="age" required><br>
