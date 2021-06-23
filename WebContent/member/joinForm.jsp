@@ -57,13 +57,9 @@
 				}else if(check == 1){
 					$("#nickCheck").html("이미 사용중인 닉네임입니다.");
 					$("#nickCheck").css("color", "red"); 
-		            
 				}
 			}
-			
 		});
-		
-		
 	}
 	
 	
@@ -106,8 +102,6 @@
 		var addr3 = document.fr.addr3.value; 
 		var tel = document.fr.tel.value;
 
-		
-		
 		if (idl < 5 || idl >= 13 ) {
 			alert("아이디는 5~13자리 사이로 만들어주세요.");
 			document.fr.id.focus();
@@ -142,8 +136,6 @@
 			alert("성별을 체크해주세요.");
 			return false;
 		}
-		
-		
 		
 		if(/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/.test(email) == false){
 			alert("이메일의 양식이 맞지 않습니다.");
@@ -261,6 +253,7 @@
 			
 			<label>이메일</label>
 			<input type="email" name="email" id="email" required><br>
+			<span id="emailCheck"></span>
 			
 			<input type="text" name="addr1" id="addr1" placeholder="우편번호" required readonly="readonly">
 			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
