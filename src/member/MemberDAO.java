@@ -148,7 +148,7 @@ public class MemberDAO {
 	
 	//아이디 중복 검사
 	public int idCheck(String id){
-		int check = 0;
+		int check = 1;
 		try {
 			conn = getConnection();
 			
@@ -175,7 +175,7 @@ public class MemberDAO {
 	
 	//nickname중복 검사
 	public int nickCheck(String nickname){
-		int check = 0;
+		int check = 1;
 		try {
 			conn = getConnection();
 			
@@ -198,7 +198,29 @@ public class MemberDAO {
 		return check;
 	}
 	
-	
+	//이메일 중복검사
+	public int emailCheck(String email){
+		int check = 1;
+		try {
+			conn = getConnection();
+			sql = "select email from member where email = ?";
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, email);
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				check = 1;
+			}else{
+				check = 0;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
 	// 내정보 가지고 오기
 	public ArrayList getMyPage(String id){
 		

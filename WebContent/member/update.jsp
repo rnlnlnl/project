@@ -51,6 +51,7 @@
 			<input type="submit" value="변경하기">
 			<button><a href="../main.jsp">돌아가기</a></button>
 		</form>
+		<button><a href="./delete.jsp">회원탈퇴</a></button>
 	</fieldset>
 	
 	

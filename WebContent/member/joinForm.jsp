@@ -62,7 +62,26 @@
 		});
 	}
 	
-	
+	function emailCheck() {
+		var email = $("#email").val();
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
+			data : ({
+				email : $("#email").val()
+			}),
+			success: function (check) {
+				if(check == 0){
+					$("#emailCheck").html("사용 가능한 이메일입니다.");
+					$("#emailCheck").css("color","green");
+				}else if(check == 1){
+					$("#emailCheck").html("사용 불가능한 이메일 입니다.");
+					$("#emailCheck").css("color","red");
+				}
+			}
+		});
+	}
 	
 	
 	
@@ -252,8 +271,8 @@
 			<input type="radio" name="gender" id="gender" value="여">여<br>
 			
 			<label>이메일</label>
-			<input type="email" name="email" id="email" required><br>
-			<span id="emailCheck"></span>
+			<input type="email" name="email" id="email" onblur="emailCheck();" required>
+			<span id="emailCheck"></span><br>
 			
 			<input type="text" name="addr1" id="addr1" placeholder="우편번호" required readonly="readonly">
 			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
