@@ -200,7 +200,7 @@ public class MemberDAO {
 	
 	//이메일 중복검사
 	public int emailCheck(String email){
-		int check = 1;
+		int echeck = 1;
 		try {
 			conn = getConnection();
 			sql = "select email from member where email = ?";
@@ -209,9 +209,9 @@ public class MemberDAO {
 			rs = pst.executeQuery();
 			
 			if(rs.next()){
-				check = 1;
+				echeck = 1;
 			}else{
-				check = 0;
+				echeck = 0;
 			}
 			
 		} catch (Exception e) {
@@ -219,8 +219,38 @@ public class MemberDAO {
 		}finally {
 			closeAll(conn, pst, rs);
 		}
-		return check;
+		return echeck;
 	}
+	
+	// 전화번호 중복 검사
+	public int telCheck(String tel){
+		int tcheck = 1;
+		try {
+			
+			conn = getConnection();
+			sql = "select tel from member where tel = ?";
+			
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, tel);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				tcheck = 1;
+			}else{
+				tcheck = 0;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("전화번호 중복 검사 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return tcheck;
+	}
+	
+	
 	// 내정보 가지고 오기
 	public ArrayList getMyPage(String id){
 		
@@ -265,6 +295,7 @@ public class MemberDAO {
 		return list;
 	}
 	
+	// 내정보 바꾸기
 	public void myPageUpdate(MemberBean mbean){
 		System.out.println(mbean.getId());
 		try {
@@ -305,8 +336,39 @@ public class MemberDAO {
 	}
 	
 	
-	
-	
-	
-
+	//회원탈퇴
+	public int deleteMember(String nickname, String pw){
+		int check = 0;
+		try {
+			conn = getConnection();
+			sql = "select pw from member where nickname = ?";
+			
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, nickname);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				if (pw.equals(rs.getString("pw"))) {
+					sql = "delete from member where nickname = ?";
+					
+					pst = conn.prepareStatement(sql);
+					pst.setString(1, nickname);
+					
+					pst.executeUpdate();
+					
+					check = 1;
+				}else{
+					check = 0;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("회원탈퇴에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
 }

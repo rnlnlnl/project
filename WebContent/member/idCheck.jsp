@@ -7,8 +7,6 @@
 	
 	String id = request.getParameter("id");
 	
-	
-	
 	MemberDAO mDAO = new MemberDAO();
 	
 	// 데이터 타입 지정해서 가져오기

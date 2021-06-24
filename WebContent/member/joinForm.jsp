@@ -69,15 +69,38 @@
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
 			data : ({
-				email : $("#email").val()
+				email: $("#email").val()
 			}),
-			success: function (check) {
-				if(check == 0){
+			success: function (echeck) {
+				if(echeck == 0){
 					$("#emailCheck").html("사용 가능한 이메일입니다.");
-					$("#emailCheck").css("color","green");
-				}else if(check == 1){
+					$("#emailCheck").css("color", "green");
+				}else if(echeck == 1){
 					$("#emailCheck").html("사용 불가능한 이메일 입니다.");
-					$("#emailCheck").css("color","red");
+					$("#emailCheck").css("color", "red");
+				}
+			}
+		});
+	}
+	
+	// 전화번호 중복 검사
+	function telCheck() {
+		var tel = $("#tel").val();
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/telCheck.jsp",
+			data : ({
+				tel: $("#tel").val()
+			}),
+			success: function (tcheck) {
+				console.log("뭐냐"+tcheck);
+				if(tcheck == 0){
+					$("#telCheck").html("사용 가능한 전화번호입니다.");
+					$("#telCheck").css("color", "green");
+				}else if(tcheck == 1){
+					$("#telCheck").html("사용 불가능한 전화번호입니다.");
+					$("#telCheck").css("color", "red");
 				}
 			}
 		});
@@ -281,9 +304,10 @@
 			<!-- <input type="hidden" id="sample6_extraAddress" placeholder="참고항목"> -->
 			
 			<label>전화번호</label>
-			<input type="text" name="tel" id="tel" placeholder="(-)을 넣어주세요. " required><br>
+			<input type="text" name="tel" id="tel" onblur="telCheck();" placeholder="(-)을 넣어주세요. "  required><br>
+			<span id="telCheck"></span><br>
 			
-			<input type="submit" value="회원가입" onclick="join()">
+			<input type="submit" value="회원가입" onclick="return join()">
 			<input type="reset" value="초기화">
 		</form>
 	</fieldset>

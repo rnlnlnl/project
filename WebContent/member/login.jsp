@@ -8,7 +8,7 @@
 </head>
 <body>
 	
-	<img alt="gameItem" src="../image/logo.jpg">
+	<a href="../main.jsp"><img alt="gameItem" src="../image/logo.jpg"></a>
 	
 	<fieldset>
 	  <legend>로그인</legend>
