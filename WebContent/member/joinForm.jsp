@@ -98,7 +98,7 @@
 				if(tcheck == 0){
 					$("#telCheck").html("사용 가능한 전화번호입니다.");
 					$("#telCheck").css("color", "green");
-				}else if(tcheck == 1){
+				}else if(tcheck == 1 || tcheck == -1){
 					$("#telCheck").html("사용 불가능한 전화번호입니다.");
 					$("#telCheck").css("color", "red");
 				}

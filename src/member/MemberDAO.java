@@ -236,7 +236,12 @@ public class MemberDAO {
 			rs = pst.executeQuery();
 			
 			if(rs.next()){
-				tcheck = 1;
+				if(tel.equals(rs.getString("tel"))){
+					tcheck = -1;
+				}else{
+					tcheck = 1;
+				}
+				
 			}else{
 				tcheck = 0;
 			}
