@@ -9,8 +9,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.mysql.fabric.Response;
+
+import board.BoardBean;
+
 public class MemberDAO {
-	
+
 	
 	Connection conn = null;
 	PreparedStatement pst = null;
@@ -48,6 +52,7 @@ public class MemberDAO {
 		}
 		
 	}
+	
 	// 아이디와 비밀번호가 DB에있을때 로그인
 	public int userCheck(String id, String pw){
 		
@@ -141,6 +146,7 @@ public class MemberDAO {
 			
 		} catch (Exception e) {
 			System.out.println("회원가입 에러!"+e);
+			
 		}finally {
 			closeAll(conn, pst, rs);
 		}
@@ -179,17 +185,13 @@ public class MemberDAO {
 		try {
 			conn = getConnection();
 			
-			sql = "select * from member where nickname = ?";
+			sql = "select nickname from member where nickname = ?";
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, nickname);
 			rs = pst.executeQuery();
 			
 			if(rs.next()){
-				if (nickname.equals(rs.getString("nickname"))) {
-					check = -1;
-				}else{
-					check = 1;
-				}
+				check = 1;
 			}else{
 				check = 0;
 			}
@@ -240,12 +242,7 @@ public class MemberDAO {
 			rs = pst.executeQuery();
 			
 			if(rs.next()){
-				if(tel.equals(rs.getString("tel"))){
-					tcheck = -1;
-				}else{
-					tcheck = 1;
-				}
-				
+				tcheck = 1;
 			}else{
 				tcheck = 0;
 			}
@@ -321,16 +318,17 @@ public class MemberDAO {
 			
 			if (rs.next()) {
 				
-				sql = "update member set age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
+				sql = "update member set nickname = ?, age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
 				
 				pst = conn.prepareStatement(sql);
 				
-				pst.setInt(1, mbean.getAge());
-				pst.setString(2, mbean.getAddr1());
-				pst.setString(3, mbean.getAddr2());
-				pst.setString(4, mbean.getAddr3());
-				pst.setString(5, mbean.getTel());
-				pst.setString(6, mbean.getId());
+				pst.setString(1, mbean.getNickname());
+				pst.setInt(2, mbean.getAge());
+				pst.setString(3, mbean.getAddr1());
+				pst.setString(4, mbean.getAddr2());
+				pst.setString(5, mbean.getAddr3());
+				pst.setString(6, mbean.getTel());
+				pst.setString(7, mbean.getId());
 				
 				pst.executeUpdate();
 				
@@ -338,6 +336,7 @@ public class MemberDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("내정보변경에서 오류");
 		}finally {
 			closeAll(conn, pst, rs);
 		}

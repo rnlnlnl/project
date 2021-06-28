@@ -5,9 +5,9 @@
 	request.setCharacterEncoding("UTF-8");
 	MemberDAO mDAO = new MemberDAO();
 	String nickname = request.getParameter("nickname");
+	String id = (String)session.getAttribute("id");
 	
-	int check = mDAO.nickCheck(nickname);
+	int check = mDAO.nickCheck(nickname); 
 	
 %>
 	<%=check%>
-	

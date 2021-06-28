@@ -14,35 +14,37 @@
 		Ajax는 해당 페이지에 있는 값 자체를 가지고 오는 거라서 페이지를 비워주고 값만 나타나게 해줘야 한다
 		숫자를 가지고 오려면 datatype을 "text"로 하면 안된다
 	*/
+
  	function idChecked() {
 		
 		var id = $("#id").val();
-		
- 		$.ajax({
-			type: "post",
-			url: "${pageContext.request.contextPath}/member/idCheck.jsp",
-			data: ({
-				id: $("#id").val()
-			}),
-			
-			success: function (result) { 
-				console.log("뭐냐"+result);
-				if (result == 0) {
-					$("#idCheck").html("사용가능한 아이디입니다.");
-					$("#idCheck").css("color", "green");
-	                
-				}else if(result == 1){
-					$("#idCheck").html("이미 사용중인 아이디입니다.");
-					$("#idCheck").css("color", "red"); 
-		            
+		var rti = true;
+	 		$.ajax({
+				type: "post",
+				url: "${pageContext.request.contextPath}/member/idCheck.jsp",
+				data: ({
+					id: $("#id").val()
+				}),
+				
+				success: function (result) { 
+					console.log("뭐냐"+result);
+					if (result == 0) {
+						$("#idCheck").html("사용가능한 아이디입니다.");
+						$("#idCheck").css("color", "green");
+						
+					}else if(result == 1){
+						$("#idCheck").html("이미 사용중인 아이디입니다.");
+						$("#idCheck").css("color", "red"); 
+						rti = false;
+					}
 				}
-			}
-		});  
- 	}
+			});
+		}
+ 	
 	
 	function nickCheck() {
 		var nickname = $("#nickname").val();
-		
+		var rtn = true;
 		$.ajax({
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
@@ -57,6 +59,7 @@
 				}else if(check == 1){
 					$("#nickCheck").html("이미 사용중인 닉네임입니다.");
 					$("#nickCheck").css("color", "red"); 
+					rtn = false;
 				}
 			}
 		});
@@ -64,7 +67,7 @@
 	
 	function emailCheck() {
 		var email = $("#email").val();
-		
+		var rte = true;
 		$.ajax({
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
@@ -78,6 +81,7 @@
 				}else if(echeck == 1){
 					$("#emailCheck").html("사용 불가능한 이메일 입니다.");
 					$("#emailCheck").css("color", "red");
+					rte = false;
 				}
 			}
 		});
@@ -86,7 +90,7 @@
 	// 전화번호 중복 검사
 	function telCheck() {
 		var tel = $("#tel").val();
-		
+		var rtt = true;
 		$.ajax({
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/telCheck.jsp",
@@ -101,6 +105,7 @@
 				}else if(tcheck == 1 || tcheck == -1){
 					$("#telCheck").html("사용 불가능한 전화번호입니다.");
 					$("#telCheck").css("color", "red");
+					rtt = false;
 				}
 			}
 		});
@@ -116,8 +121,10 @@
 		
 		if (pw != pw1 ) {
 			$("#passCheck").html("비밀번호가 일치하지 않습니다.").css("color","red");
+			return false;
 		}else{
 			$("#passCheck").html("비밀번호가 동일합니다.").css("color","green");
+			
 		}
 		
 	}

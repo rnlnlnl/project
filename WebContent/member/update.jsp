@@ -11,12 +11,26 @@
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <title>내정보 변경</title>
-
+<%
+	String id = (String)session.getAttribute("id");
+	String nikename = (String)session.getAttribute("nickname");
+	
+	MemberDAO mDAO = new MemberDAO();
+	MemberBean mbean = new MemberBean();
+	
+	ArrayList list = mDAO.getMyPage(id);
+	mbean = (MemberBean)list.get(0);
+%>
 <script type="text/javascript">
+	
+	
+	
+	
+	
 	
 	function update() {
 		
-		var id = $("#id").val();
+		var id = document.fr.id.value;
 		var age = document.fr.age.value;
 		var tel = document.fr.tel.value;
 		
@@ -37,13 +51,14 @@
 	
 	//닉네임중복 검사
 	function nickCheck() {
-		var nickname = $("#nickname").val();
-		
+		var nickname = document.fr.nickname.value;
+		var rtn = true;
 		$.ajax({
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
 			data:({
-				nickname : $("#nickname").val()
+				nickname : document.fr.nickname.value
+				
 			}),
 			success: function (check) {
 				console.log("닉네임"+check);
@@ -53,23 +68,22 @@
 				}else if(check == 1){
 					$("#nickCheck").html("사용 불가능한 닉네임입니다.");
 					$("#nickCheck").css("color", "red");
-				}else if(check == -1){
-					$("#nickCheck").html("사용 가능한 닉네임입니다.");
-					$("#nickCheck").css("color", "green");
+					rtn = false;
 				}
 			}
 		});	
+		return rtn;
 	}
 	
 	// 전화번호 중복 검사
 	function telCheck() {
-		var tel = $("#tel").val();
-		
+		var tel = document.fr.tel.value;
+		var rtt = true;
 		$.ajax({
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/telCheck.jsp",
 			data : ({
-				tel: $("#tel").val()
+				tel: document.fr.tel.value
 			}),
 			success: function (tcheck) {
 				console.log("뭐냐"+tcheck);
@@ -79,12 +93,11 @@
 				}else if(tcheck == 1){
 					$("#telCheck").html("사용 불가능한 전화번호입니다.");
 					$("#telCheck").css("color", "red");
-				}else if(tcheck == -1){
-					$("#telCheck").html("사용 가능한 전화번호입니다.");
-					$("#telCheck").css("color", "green");
+					rtt = false;
 				}
 			}
 		});
+		return rtt;
 	}
 	
 	
@@ -148,20 +161,11 @@
 
 </head>
 <body>
-<%
-	String id = (String)session.getAttribute("id");
-	String nikename = (String)session.getAttribute("nickname");
-	
-	MemberDAO mDAO = new MemberDAO();
-	MemberBean mbean = new MemberBean();
-	
-	ArrayList list = mDAO.getMyPage(id);
-	mbean = (MemberBean)list.get(0);
-%>
+
 	
 	<fieldset>
 		<legend>내정보 변경</legend>
-		<form action="updatePro.jsp?id=<%=id%>" method="post" name="fr">
+		<form action="updatePro.jsp" method="post" name="fr">
 			<label>아이디</label>
 			<input type="text" name="id" value="<%=mbean.getId()%>" readonly><br>
 			

@@ -7,13 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>내정보 변경</title>
+<%request.setCharacterEncoding("UTF-8"); %>
 <jsp:useBean id="mbean" class="member.MemberBean"/>
 <jsp:setProperty property="*" name="mbean"/>
 </head>
 <body>
 <%
 	
-	request.setCharacterEncoding("UTF-8");
+	
 	
 	MemberDAO mDAO = new MemberDAO();
 	
