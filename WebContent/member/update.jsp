@@ -17,12 +17,8 @@
 	function update() {
 		
 		var id = $("#id").val();
-		var age = $("#age").val();
-		var tel = $("#tel").val();
-		
-		
-		
-		
+		var age = document.fr.age.value;
+		var tel = document.fr.tel.value;
 		
 		if (/^[0-9]{1,3}/.test(age) == false) {
 			alert("나이는 숫자를 적어주세요");
@@ -39,6 +35,32 @@
 		
 	}
 	
+	//닉네임중복 검사
+	function nickCheck() {
+		var nickname = $("#nickname").val();
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
+			data:({
+				nickname : $("#nickname").val()
+			}),
+			success: function (check) {
+				console.log("닉네임"+check);
+				if(check == 0){
+					$("#nickCheck").html("사용 가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "green");
+				}else if(check == 1){
+					$("#nickCheck").html("사용 불가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "red");
+				}else if(check == -1){
+					$("#nickCheck").html("사용 가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "green");
+				}
+			}
+		});	
+	}
+	
 	// 전화번호 중복 검사
 	function telCheck() {
 		var tel = $("#tel").val();
@@ -51,16 +73,23 @@
 			}),
 			success: function (tcheck) {
 				console.log("뭐냐"+tcheck);
-				if(tcheck == 0 || tcheck == -1){
+				if(tcheck == 0){
 					$("#telCheck").html("사용 가능한 전화번호입니다.");
 					$("#telCheck").css("color", "green");
 				}else if(tcheck == 1){
 					$("#telCheck").html("사용 불가능한 전화번호입니다.");
 					$("#telCheck").css("color", "red");
+				}else if(tcheck == -1){
+					$("#telCheck").html("사용 가능한 전화번호입니다.");
+					$("#telCheck").css("color", "green");
 				}
 			}
 		});
 	}
+	
+	
+	
+	
 	
 	
 	function sample6_execDaumPostcode() {
@@ -132,7 +161,7 @@
 	
 	<fieldset>
 		<legend>내정보 변경</legend>
-		<form action="updatePro.jsp" method="post" >
+		<form action="updatePro.jsp?id=<%=id%>" method="post" name="fr">
 			<label>아이디</label>
 			<input type="text" name="id" value="<%=mbean.getId()%>" readonly><br>
 			
@@ -140,7 +169,8 @@
 			<input type="text" name="name" value="<%=mbean.getName()%>" readonly><br>
 			
 			<label>닉네임</label>
-			<input type="text" name="nickname" value="<%=mbean.getNickname()%>" required><br>
+			<input type="text" name="nickname" value="<%=mbean.getNickname()%>" onblur="nickCheck();" required><br>
+			<span id="nickCheck"></span><br>
 			
 			<label>나이</label>
 			<input type="text" name="age" value="<%=mbean.getAge()%>" required><br>
@@ -156,7 +186,7 @@
 			
 			<label>전화번호</label>
 			<input type="text" name="tel" value="<%=mbean.getTel()%>" onblur="telCheck();" required><br>
-			<span id="telCheck"></span>
+			<span id="telCheck"></span><br>
 			
 			<input type="submit" value="변경하기" onclick="return update();">
 			<button><a href="../main.jsp">돌아가기</a></button>

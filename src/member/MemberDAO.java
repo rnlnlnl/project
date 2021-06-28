@@ -179,13 +179,17 @@ public class MemberDAO {
 		try {
 			conn = getConnection();
 			
-			sql = "select nickname from member where nickname = ?";
+			sql = "select * from member where nickname = ?";
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, nickname);
 			rs = pst.executeQuery();
 			
 			if(rs.next()){
-				check = 1;
+				if (nickname.equals(rs.getString("nickname"))) {
+					check = -1;
+				}else{
+					check = 1;
+				}
 			}else{
 				check = 0;
 			}
