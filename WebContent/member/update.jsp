@@ -8,8 +8,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <title>내정보 변경</title>
 <%
 	String id = (String)session.getAttribute("id");
@@ -22,11 +23,6 @@
 	mbean = (MemberBean)list.get(0);
 %>
 <script type="text/javascript">
-	
-	
-	
-	
-	
 	
 	function update() {
 		
@@ -50,7 +46,7 @@
 	}
 	
 	//닉네임중복 검사
-	function nickCheck() {
+	function nickCheck(rtn) {
 		var nickname = document.fr.nickname.value;
 		var rtn = true;
 		$.ajax({
@@ -72,7 +68,6 @@
 				}
 			}
 		});	
-		return rtn;
 	}
 	
 	// 전화번호 중복 검사
@@ -97,7 +92,6 @@
 				}
 			}
 		});
-		return rtt;
 	}
 	
 	
