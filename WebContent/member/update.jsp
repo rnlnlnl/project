@@ -29,6 +29,7 @@
 		var id = document.fr.id.value;
 		var age = document.fr.age.value;
 		var tel = document.fr.tel.value;
+		var nickname = document.fr.nickname.value;
 		
 		if (/^[0-9]{1,3}/.test(age) == false) {
 			alert("나이는 숫자를 적어주세요");
@@ -36,12 +37,17 @@
 			return false;
 		}
 		
-		/* if (/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(tel) == false) {
+		if (/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(tel) == false) {
 			alert("(-)을 넣어주세요. 전화번호 양식이 맞지 않습니다.");
 			document.fr.tel.focus();
 			return false;
-		} */
+		} 
 		
+		if(nickname > 15){
+			alert("별명은 14자 이하로 작성해주세요.");
+			document.fr.nickname.focus();
+			return false;
+		}
 		
 	}
 	
@@ -49,68 +55,53 @@
 	function nickCheck(rtn) {
 		var nickname = document.fr.nickname.value;
 		var rtn = true;
-		if(nickname.length == null || nickname.length > 15){
-			$("#nickCheck").html("닉네임을 적어주세요. 단15자 이내입니다");
-			$("#nickCheck").css("color", "red");
-			rtn = false;
-			return;
-		}else{
 		
-			$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
-				data:({
-					nickname : document.fr.nickname.value
-					
-				}),
-				success: function (check) {
-					console.log("닉네임"+check);
-					if(check == 0){
-						$("#nickCheck").html("사용 가능한 닉네임입니다.");
-						$("#nickCheck").css("color", "green");
-						rtn = true;
-					}else if(check == 1){
-						$("#nickCheck").html("사용 불가능한 닉네임입니다.");
-						$("#nickCheck").css("color", "red");
-						rtn = false;
-					}
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
+			data:({
+				nickname : document.fr.nickname.value
+				
+			}),
+			success: function (check) {
+				console.log("닉네임"+check);
+				if(check == 0){
+					$("#nickCheck").html("사용 가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "green");
+					rtn = true;
+				}else if(check == 1){
+					$("#nickCheck").html("사용 불가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "red");
+					rtn = false;
 				}
-			});	
-			return;
-		}
+			}
+		});	
 	}
 	
 	// 전화번호 중복 검사
 	function telCheck() {
 		var tel = document.fr.tel.value;
 		var rtt = true;
-		if (/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(tel) == false) {
-			$("#telCheck").html("(-)을 넣어주세요. 전화번호 양식이 맞지 않습니다.");
-			$("#telCheck").css("color", "red");
-			rtt = false;
-			return;
-		}else{
-			$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/telCheck.jsp",
-				data : ({
-					tel: document.fr.tel.value
-				}),
-				success: function (tcheck) {
-					console.log("뭐냐"+tcheck);
-					if(tcheck == 0){
-						$("#telCheck").html("사용 가능한 전화번호입니다.");
-						$("#telCheck").css("color", "green");
-						rtt = true;
-					}else if(tcheck == 1){
-						$("#telCheck").html("사용 불가능한 전화번호입니다.");
-						$("#telCheck").css("color", "red");
-						rtt = false;
-					}
+		
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/telCheck.jsp",
+			data : ({
+				tel: document.fr.tel.value
+			}),
+			success: function (tcheck) {
+				console.log("뭐냐"+tcheck);
+				if(tcheck == 0){
+					$("#telCheck").html("사용 가능한 전화번호입니다.");
+					$("#telCheck").css("color", "green");
+					rtt = true;
+				}else if(tcheck == 1){
+					$("#telCheck").html("사용 불가능한 전화번호입니다.");
+					$("#telCheck").css("color", "red");
+					rtt = false;
 				}
-			});
-			return;
-		}
+			}
+		});
 	}
 	
 	
