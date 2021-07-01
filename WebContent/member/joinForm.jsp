@@ -19,27 +19,28 @@
 		
 		var id = $("#id").val();
 		var rti = true;
-	 		$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/idCheck.jsp",
-				data: ({
-					id: $("#id").val()
-				}),
-				
-				success: function (result) { 
-					console.log("뭐냐"+result);
-					if (result == 0) {
-						$("#idCheck").html("사용가능한 아이디입니다.");
-						$("#idCheck").css("color", "green");
-						
-					}else if(result == 1){
-						$("#idCheck").html("이미 사용중인 아이디입니다.");
-						$("#idCheck").css("color", "red"); 
-						rti = false;
-					}
+		
+ 		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/idCheck.jsp",
+			data: ({
+				id: $("#id").val()
+			}),
+			
+			success: function (result) { 
+				console.log("뭐냐"+result);
+				if (result == 0) {
+					$("#idCheck").html("사용가능한 아이디입니다.");
+					$("#idCheck").css("color", "green");
+					tri = true;
+				}else if(result == 1){
+					$("#idCheck").html("이미 사용중인 아이디입니다.");
+					$("#idCheck").css("color", "red"); 
+					rti = false;
 				}
-			});
-		}
+			}
+		});
+	}
  	
 	
 	function nickCheck() {
@@ -151,11 +152,11 @@
 		var addr3 = document.fr.addr3.value; 
 		var tel = document.fr.tel.value;
 
-		if (idl < 5 || idl >= 13 ) {
+/* 		if (idl < 5 || idl >= 13 ) {
 			alert("아이디는 5~13자리 사이로 만들어주세요.");
 			document.fr.id.focus();
 			return false;
-		}
+		} */
 		
 		if (pw0 < 7 || pw0 > 17 ) {
 			alert("비밀번호는 8~16자리 사이로 만들어주세요.");
