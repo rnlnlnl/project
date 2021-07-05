@@ -1,3 +1,4 @@
+<%@page import="board.BoardBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -55,7 +56,7 @@
 
 </head>
 <body>
-	
+	<h5>글 갯수[<%=cnt%>]</h5>
 	
 	
 	<table>
@@ -68,12 +69,78 @@
 			<td>좋아요</td>
 		</tr>
 		
+<% 
+		if(cnt != 0){
+			for(int i = 0; i<boardList.size(); i++){
+				bbean = (BoardBean)boardList.get(i);
+%>				
+				<tr>
+					<td><%=bbean.getNum()%></td>
+					<td>
+					<%
+					int wid = 0;
+					if(bbean.getRe_lev() > 0){
+						wid = 10 * bbean.getRe_lev();
+						%>
+						<img src="../image/level.gif" height="15" width="<%=wid%>">
+						<img src="../image/re.gif">
+					<%}%>
+					<a href="content.jsp?num=<%=bbean.getNum()%>&pageNum=<%=pageNum%>"><%=bbean.getTitle()%></a>
+					</td>
+					<td><%=bbean.getContent()%></td>
+					<td><%=bbean.getDate() %></td>
+					<td><%=bbean.getReadcount() %></td>
+					<td></td>
+				</tr>
+<%				
+			}
+		}
 		
 		
+		
+%>		
 	</table>
 	
+	<hr>
 	
+<%
+	////////////////////////////////////////////////
+	// 페이징 처리
+	if(cnt>0){
+		// 한 페이지에서 보여줄 페이지 번호의 개수
+		int pageBlock = 5;
+		// 전체 페이지 갯수  => 전체글 / 페이지 크기
+		int pageCount = cnt / pageSize + (cnt % pageSize == 0? 0 : 1);
+		// 페이지 블럭 시작번호 계산  1 ~ 10 => 1, 11~20 => 11, 21~30 => 21
+		int startPage = ((currentpage-1)/pageBlock)*pageBlock+1;
+		// 페이지 블럭 끝번호 계산
+		int endPage = startPage + pageBlock -1;
+		// 끝 페이지 번호를 계산
+		if(endPage > pageCount){
+			endPage = pageCount;
+		}
+		
+		//[이전]
+		if(startPage > pageBlock){
+			%>
+			<a href="boardList.jsp?pageNum=<%=startPage-pageBlock%>">[이전]</a>
+			<%
+		}
+		// [1...10] [11...20] [21...30] ...
+		for(int i =startPage; i<=endPage; i++){
+			%>
+			<a href="boardList.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+			<%
+		}
+		if(endPage < pageCount){
+			%>
+			<a href="boardList.jsp?pageNum=<%=startPage+pageBlock%>">[다음]</a>
+			<%
+		}
+		
+	}
 	
-	
+%>	
+
 </body>
 </html>

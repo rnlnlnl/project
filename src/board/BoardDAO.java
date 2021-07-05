@@ -93,7 +93,21 @@ public class BoardDAO {
 			rs = pst.executeQuery();
 			
 			while (rs.next()) {
+				BoardBean bbean = new BoardBean();
+				bbean.setContent(rs.getString("content"));
+				bbean.setDate(rs.getDate("date"));
+				bbean.setFile(rs.getString("file"));
+				bbean.setIp(rs.getString("ip"));
+				bbean.setNickname(rs.getString("nickname"));
+				bbean.setNum(rs.getInt("num"));
+				bbean.setPw(rs.getString("pw"));
+				bbean.setRe_lev(rs.getInt("re_lev"));
+				bbean.setRe_ref(rs.getInt("re_ref"));
+				bbean.setRe_seq(rs.getInt("re_seq"));
+				bbean.setReadcount(rs.getInt("readcount"));
+				bbean.setTitle(rs.getString("title"));
 				
+				boardList.add(bbean);
 			}
 			
 		} catch (Exception e) {
@@ -104,6 +118,71 @@ public class BoardDAO {
 		}
 		return boardList;
 	}
+	
+	// 조회수 카운트
+	public void updateReadcount(int num){
+		
+		try {
+			conn = getConnection();
+			
+			sql = "update board set readcount = readcount+1 where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, num);
+			pst.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("조회수에서 오류"+e);
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+	}
+	
+	// 선택한 계시판 보여주기
+	public BoardBean getBoard(int num){
+		BoardBean bbean = null;
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select * from board where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, num);
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				bbean.setContent(rs.getString("content"));
+				bbean.setDate(rs.getDate("date"));
+				bbean.setFile(rs.getString("file"));
+				bbean.setIp(rs.getString("ip"));
+				bbean.setNickname(rs.getString("nickname"));
+				bbean.setNum(rs.getInt("num"));
+				bbean.setPw(rs.getString("pw"));
+				bbean.setRe_lev(rs.getInt("re_lev"));
+				bbean.setRe_ref(rs.getInt("re_ref"));
+				bbean.setRe_seq(rs.getInt("re_seq"));
+				bbean.setReadcount(rs.getInt("readcount"));
+				bbean.setTitle(rs.getString("title"));
+
+			}
+		} catch (Exception e) {
+			System.out.println("계시판 num가져오기 실패");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return bbean;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
