@@ -3,11 +3,10 @@
 <%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <script src="../js/jquery-3.6.0.min.js"></script>
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -15,6 +14,25 @@
 	String id = (String)session.getAttribute("id");
 	String nickname = (String)session.getAttribute("nickname");
 %>
+
+<script type="text/javascript">
+	function writeb() {
+		var nickname = $("#nickname").val();
+		if(nickname == "null"){
+			location.href="../member/login.jsp";
+		}else if(nickname != null){
+			location.href="writeForm.jsp";
+		}
+	}
+	
+</script>
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
 <jsp:useBean id="bbean" class="board.BoardBean"/>
 <jsp:setProperty property="*" name="bbean"/>
 <%
@@ -58,7 +76,9 @@
 <body>
 	<h5>글 갯수[<%=cnt%>]</h5>
 	
-	
+
+		<button name="write" id="write" onclick="writeb();">글쓰기</button>
+		<input type="hidden" id="nickname" value="<%=nickname%>">
 	<table>
 		<tr>
 			<td></td>
@@ -95,8 +115,6 @@
 <%				
 			}
 		}
-		
-		
 		
 %>		
 	</table>

@@ -6,7 +6,6 @@ public class BoardBean {
 	
 	private int num;
 	private String nickname;
-	private String pw;
 	private String title;
 	private String content;
 	private int readcount;
@@ -28,12 +27,6 @@ public class BoardBean {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-	}
-	public String getPw() {
-		return pw;
-	}
-	public void setPw(String pw) {
-		this.pw = pw;
 	}
 	public String getTitle() {
 		return title;
@@ -91,7 +84,7 @@ public class BoardBean {
 	}
 	@Override
 	public String toString() {
-		return "BoardBean [num=" + num + ", nickname=" + nickname + ", pw=" + pw + ", title=" + title + ", content="
+		return "BoardBean [num=" + num + ", nickname=" + nickname + ", title=" + title + ", content="
 				+ content + ", readcount=" + readcount + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq="
 				+ re_seq + ", date=" + date + ", ip=" + ip + ", file=" + file + "]";
 	}
