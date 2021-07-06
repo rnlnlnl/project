@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.sun.java_cup.internal.runtime.Symbol;
+
 public class BoardDAO {
 
 	Connection conn = null;
@@ -205,6 +207,8 @@ public class BoardDAO {
 			rs = pst.executeQuery();
 			
 			if (rs.next()) {
+				bbean = new BoardBean();
+				
 				bbean.setContent(rs.getString("content"));
 				bbean.setDate(rs.getDate("date"));
 				bbean.setFile(rs.getString("file"));
@@ -226,10 +230,96 @@ public class BoardDAO {
 		return bbean;
 	}
 	
+	// 게시판 삭제
+	public int deleteBoard(String nickname, int num){
+		int check = 0;
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select nickname from board where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, num);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				if(nickname.equals(rs.getString("nickname"))){
+					sql = "delete from board where num = ?";
+				
+					pst = conn.prepareStatement(sql);
+					
+					pst.setInt(1, num);
+					
+					pst.executeUpdate();
+					check = 1;
+				}else{
+					check = 0;
+				}
+			}else{
+				check = -1;
+			}
+		} catch (Exception e) {
+			System.out.println("글삭제 에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
 	
-	
-	
-	
+	// 답글 작성
+	public void reInsertBoard(BoardBean bbean){
+		int num = 0;
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select max(num) from board";
+			
+			pst = conn.prepareStatement(sql);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				num = rs.getInt(1)+1;
+			}
+			
+			sql = "update board set re_seq = re_seq + 1 "
+					+"where re_ref=? and re_seq>?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, bbean.getRe_ref());
+			pst.setInt(2, bbean.getRe_seq());
+
+			pst.executeUpdate();
+			
+			sql = "insert into board values(?,?,?,?,?,?,?,?,now(),?,?);";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, num);
+			pst.setString(2, bbean.getNickname());
+			pst.setString(3, bbean.getTitle());
+			pst.setString(4, bbean.getContent());
+			pst.setInt(5, bbean.getReadcount());
+			pst.setInt(6, bbean.getRe_ref());
+			pst.setInt(7, bbean.getRe_lev());
+			pst.setInt(8, bbean.getRe_seq());
+			pst.setString(9, bbean.getIp());
+			pst.setString(10, bbean.getFile());
+			
+			pst.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("답글 작성 실패");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+	}
 	
 	
 	

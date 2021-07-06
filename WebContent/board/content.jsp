@@ -29,7 +29,7 @@
 	
 	<h3><%=bbean.getNickname()%>의 글</h3>
 	
-	<table>
+	<table border="1">
 		<tr>
 			<td>글번호</td>
 			<td><%=bbean.getNum()%></td>

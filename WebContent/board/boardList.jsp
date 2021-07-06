@@ -94,7 +94,7 @@
 			for(int i = 0; i<boardList.size(); i++){
 				bbean = (BoardBean)boardList.get(i);
 %>				
-				<tr>
+				<tr bordercolor="black">
 					<td><%=bbean.getNum()%></td>
 					<td>
 					<%

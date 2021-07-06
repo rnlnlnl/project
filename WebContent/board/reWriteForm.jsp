@@ -7,6 +7,37 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h2>답글 쓰기</h2>
+<%
+	String nickname = (String)session.getAttribute("nickname");
+	int num = Integer.parseInt(request.getParameter("num"));
+	int re_ref = Integer.parseInt(request.getParameter("re_ref"));
+	int re_lev = Integer.parseInt(request.getParameter("re_lev"));
+	int re_seq = Integer.parseInt(request.getParameter("re_seq"));
+%>
+
+<fieldset>
+	<form action="reWritePro.jsp" method="post">
+		<input type="hidden" name="num" value="<%=num%>">
+		<input type="hidden" name="re_ref" value="<%=re_ref%>">
+		<input type="hidden" name="re_lev" value="<%=re_lev%>">
+		<input type="hidden" name="re_seq" value="<%=re_seq%>">
+		글쓴이 : <input type="text" name="nickname" value="<%=nickname%>" readonly><br>
+		제목 : <input type="text" name="title" value="[답글]"><br>
+		내용 : <textarea rows="10" cols="50" name="content"></textarea>
+		<hr>
+		<input type="submit" value="답글쓰기">
+	</form>
+</fieldset>
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
