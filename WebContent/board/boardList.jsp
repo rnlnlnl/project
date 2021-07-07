@@ -27,7 +27,11 @@
 	
 </script>
 
-
+<style type="text/css">
+	tr{
+		border: 1px solid;
+	}
+</style>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -102,8 +106,8 @@
 					if(bbean.getRe_lev() > 0){
 						wid = 10 * bbean.getRe_lev();
 						%>
-						<img src="../image/level.gif" height="15" width="<%=wid%>">
-						<img src="../image/re.gif">
+						<img src="./image/level.gif" height="15" width="<%=wid%>">
+						<img src="./image/re.gif">
 					<%}%>
 					<a href="content.jsp?num=<%=bbean.getNum()%>&pageNum=<%=pageNum%>"><%=bbean.getTitle()%></a>
 					</td>

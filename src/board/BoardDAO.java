@@ -321,7 +321,50 @@ public class BoardDAO {
 		}
 	}
 	
-	
+	// 게시판 업데이트 
+	public int updateBoard(BoardBean bbean){
+		int check = 0;
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select nickname from board where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, bbean.getNum());
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				if(bbean.getNickname().equals(rs.getString("nickname"))){
+					
+					sql = "update board set title = ?, content = ?, file = ? where num = ?";
+					
+					pst = conn.prepareStatement(sql);
+					
+					pst.setString(1, bbean.getTitle());
+					pst.setString(2, bbean.getContent());
+					pst.setString(3, bbean.getFile());
+					pst.setInt(4, bbean.getNum());
+					
+					pst.executeUpdate();
+					check = 1;
+				}else{
+					check = 0;
+				}
+			}else{
+				check = -1;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("게시판 업데이트 에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
 	
 	
 	
