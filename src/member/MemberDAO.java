@@ -308,7 +308,7 @@ public class MemberDAO {
 			
 			conn = getConnection();
 			
-			sql = "select id, name, nickname, age, email , add1 , add2, add3, tel from member where id =?";
+			sql = "select id, pw, name, nickname, age, email , add1 , add2, add3, tel from member where id =?";
 			
 			pst = conn.prepareStatement(sql);
 			
@@ -318,17 +318,18 @@ public class MemberDAO {
 			
 			if (rs.next()) {
 				
-				sql = "update member set nickname = ?, age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
+				sql = "update member set nickname = ?, pass = ?, age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
 				
 				pst = conn.prepareStatement(sql);
 				
 				pst.setString(1, mbean.getNickname());
-				pst.setInt(2, mbean.getAge());
-				pst.setString(3, mbean.getAddr1());
-				pst.setString(4, mbean.getAddr2());
-				pst.setString(5, mbean.getAddr3());
-				pst.setString(6, mbean.getTel());
-				pst.setString(7, mbean.getId());
+				pst.setString(2, mbean.getPw());
+				pst.setInt(3, mbean.getAge());
+				pst.setString(4, mbean.getAddr1());
+				pst.setString(5, mbean.getAddr2());
+				pst.setString(6, mbean.getAddr3());
+				pst.setString(7, mbean.getTel());
+				pst.setString(8, mbean.getId());
 				
 				pst.executeUpdate();
 				

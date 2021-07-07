@@ -105,7 +105,20 @@
 	}
 	
 	
-	
+	function checkpw() {
+		var pw = $("#pw").val();
+		var pw1 = $("#pw1").val();
+		
+		
+		if (pw != pw1 ) {
+			$("#passCheck").html("비밀번호가 일치하지 않습니다.").css("color","red");
+			return false;
+		}else{
+			$("#passCheck").html("비밀번호가 동일합니다.").css("color","green");
+			
+		}
+		
+	}
 	
 	
 	
@@ -172,6 +185,12 @@
 		<form action="updatePro.jsp" method="post" name="fr">
 			<label>아이디</label>
 			<input type="text" name="id" value="<%=mbean.getId()%>" readonly><br>
+			
+			<label>비밀번호</label>
+			<input type="password" name="pw" id="pw" value="<%=mbean.getPw()%>">
+			<label>비밀번호 확인</label>
+			<input type="password" name="pw1" id="pw1" onblur="checkpw();">
+			<span id="passCheck"></span>
 			
 			<label>이름</label>
 			<input type="text" name="name" value="<%=mbean.getName()%>" readonly><br>
