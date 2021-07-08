@@ -344,6 +344,38 @@ public class MemberDAO {
 
 	}
 	
+	// 이메일 이용한 비밀번호 찾기
+	public int pwEmail(String id){
+		int check = 0;
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select email from member where id = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, id);
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				check = 1;
+			}else{
+				check = 0;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("이메일 찾기에서 오류"+e);
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
+	
+	
+	
 	
 	//회원탈퇴
 	public int deleteMember(String nickname, String pw){
