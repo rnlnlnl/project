@@ -1,6 +1,9 @@
 <%@page import="member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,11 +82,15 @@
 				if(echeck == 0){
 					$("#emailCheck").html("사용 가능한 이메일입니다.");
 					$("#emailCheck").css("color", "green");
+					window.open('${contextPath}/member/emailCert.do?email='+email,'Email 인증요청','width=500, height=400, menubar=no, status=no, toolbar=no');
 				}else if(echeck == 1){
 					$("#emailCheck").html("사용 불가능한 이메일 입니다.");
 					$("#emailCheck").css("color", "red");
 					rte = false;
 				}
+			},
+			error: function() {
+				alert("회원가입 이메일 인증 애러");
 			}
 		});
 	}
