@@ -49,15 +49,17 @@ public class MemberController extends HttpServlet{
 			String email = request.getParameter("email");
 			String certNum = service.createCertNum();
 			boolean result = service.emailCertSend(email, certNum);
-			
 			request.setAttribute("result", result);
 			request.setAttribute("certNum", certNum);
 
-			nextPage = "../member/pwEmail.jsp";
+			nextPage = "./pwEmail.jsp";
 		}
 		
 		if (nextPage != null) {
 			if (isRedirect) {
+				System.out.println("리다이렉트 방식");
+				response.sendRedirect(nextPage);
+			}else{
 				System.out.println("리다이렉트 방식");
 				RequestDispatcher dis = request.getRequestDispatcher(nextPage);
 				dis.forward(request, response);

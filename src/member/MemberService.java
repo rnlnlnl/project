@@ -38,7 +38,7 @@ public class MemberService {
 		
 		try {
 			Properties properties = System.getProperties();
-
+			
 			properties.put("mail.smtp.starttls.enable", "true");
 			properties.put("mail.smtp.host", "smtp.gmail.com");
 			properties.put("mail.smtp.auth", "true");
@@ -58,9 +58,9 @@ public class MemberService {
 			message.setSentDate(new Date());
 			
 			Transport.send(message);
+			
 			result = true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.out.println("이메일 전송 오류");
 		}
 		return result;
@@ -89,7 +89,7 @@ public class MemberService {
 
 class GoogleAuthentication extends Authenticator{
 	
-	PasswordAuthentication passAuth = new PasswordAuthentication("gksaudwls124@gmail.com", "458961q2w!");
+	PasswordAuthentication passAuth = new PasswordAuthentication("gksaudwls124@gmail.com", "yhhqskxkgojlcmen");
 	
 	public PasswordAuthentication getPasswordAuthentication(){
 		return this.passAuth;
