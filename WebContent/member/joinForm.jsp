@@ -12,93 +12,125 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
-
+	var email_Check = false;
+	var id_Check = false;
+	var tel_Check = false;
+	var nick_Check = false;
 	/* 
 		Ajax는 해당 페이지에 있는 값 자체를 가지고 오는 거라서 페이지를 비워주고 값만 나타나게 해줘야 한다
 		숫자를 가지고 오려면 datatype을 "text"로 하면 안된다
 	*/
 
  	function idChecked() {
-		
+ 		var idl = $("#id").length;
 		var id = $("#id").val();
 		var rti = true;
 		
- 		$.ajax({
-			type: "post",
-			url: "${pageContext.request.contextPath}/member/idCheck.jsp",
-			data: ({
-				id: $("#id").val()
-			}),
-			
-			success: function (result) { 
-				console.log("뭐냐"+result);
-				if (result == 0) {
-					$("#idCheck").html("사용가능한 아이디입니다.");
-					$("#idCheck").css("color", "green");
-					tri = true;
-				}else if(result == 1){
-					$("#idCheck").html("이미 사용중인 아이디입니다.");
-					$("#idCheck").css("color", "red"); 
-					rti = false;
+		if(idl < 5 || idl > 14 ){
+			$("#idCheck").css("color", "red");
+	        $("#idCheck").text("5~13글자 사이로 입력해주세요.");
+	        id_Check = false;
+	        return;
+		}else{
+	 		$.ajax({
+				type: "post",
+				url: "${pageContext.request.contextPath}/member/idCheck.jsp",
+				data: ({
+					id: $("#id").val()
+				}),
+				
+				success: function (result) { 
+					console.log("뭐냐"+result);
+					if (result == 0) {
+						$("#idCheck").html("사용가능한 아이디입니다.");
+						$("#idCheck").css("color", "green");
+						tri = true;
+						id_Check = true;
+					}else if(result == 1){
+						$("#idCheck").html("이미 사용중인 아이디입니다.");
+						$("#idCheck").css("color", "red"); 
+						rti = false;
+						id_Check = false;
+					}
 				}
-			}
-		});
+			});
+		}
 	}
  	
 	
 	function nickCheck() {
+		var nickname1 = $("#nickname").length;
 		var nickname = $("#nickname").val();
 		var rtn = true;
-		$.ajax({
-			type: "post",
-			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
-			data : ({
-				nickname: $("#nickname").val()
-			}),
-			success: function(check) {
-				if (check == 0) {
-					$("#nickCheck").html("사용가능한 닉네임입니다.");
-					$("#nickCheck").css("color", "green");
-	                
-				}else if(check == 1){
-					$("#nickCheck").html("이미 사용중인 닉네임입니다.");
-					$("#nickCheck").css("color", "red"); 
-					rtn = false;
+		
+		if(nickname1 > 16){
+			$("#nickCheck").css("color", "red"); 
+			$("#nickCheck").text("닉네임을 15자 이내로 적어주세요.");
+			nick_Check = false;
+			return;
+		}else{
+			$.ajax({
+				type: "post",
+				url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
+				data : ({
+					nickname: $("#nickname").val()
+				}),
+				success: function(check) {
+					if (check == 0) {
+						$("#nickCheck").html("사용가능한 닉네임입니다.");
+						$("#nickCheck").css("color", "green");
+		                nick_Check = true;
+					}else if(check == 1){
+						$("#nickCheck").html("이미 사용중인 닉네임입니다.");
+						$("#nickCheck").css("color", "red"); 
+						rtn = false;
+						nick_Check = false;
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	function emailCheck() {
 		var email = $("#email").val();
 		var rte = true;
-		$.ajax({
-			type: "post",
-			url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
-			data : ({
-				email: $("#email").val()
-			}),
-			success: function (echeck) {
-				if(echeck == 0){
-					$("#emailCheck").html("사용 가능한 이메일입니다.");
-					$("#emailCheck").css("color", "green");
-					window.open('${contextPath}/member/emailCert.do?email='+email,'Email 인증요청','width=500, height=400, menubar=no, status=no, toolbar=no');
-				}else if(echeck == 1){
-					$("#emailCheck").html("사용 불가능한 이메일 입니다.");
-					$("#emailCheck").css("color", "red");
-					rte = false;
+		
+		if(email == ""){
+			$("#emailCheck").css("color", "red");
+			$("#emailCheck").text("이메일을 적어주세요.");
+			email_Check = false;
+			return;
+		}else{
+			$.ajax({
+				type: "post",
+				url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
+				data : ({
+					email: $("#email").val()
+				}),
+				success: function (echeck) {
+					if(echeck == 0){
+						$("#emailCheck").html("사용 가능한 이메일입니다.");
+						$("#emailCheck").css("color", "green");
+						window.open('${contextPath}/member/emailCert.do?email='+email,'Email 인증요청','width=500, height=400, menubar=no, status=no, toolbar=no');
+					}else if(echeck == 1){
+						$("#emailCheck").html("사용 불가능한 이메일 입니다.");
+						$("#emailCheck").css("color", "red");
+						rte = false;
+						email_Check = false;
+					}
+				},
+				error: function() {
+					alert("회원가입 이메일 인증 애러");
 				}
-			},
-			error: function() {
-				alert("회원가입 이메일 인증 애러");
-			}
-		});
+			});
+		}
 	}
 	
 	// 전화번호 중복 검사
 	function telCheck() {
 		var tel = $("#tel").val();
 		var rtt = true;
+
 		$.ajax({
 			type: "post",
 			url: "${pageContext.request.contextPath}/member/telCheck.jsp",
@@ -110,10 +142,12 @@
 				if(tcheck == 0){
 					$("#telCheck").html("사용 가능한 전화번호입니다.");
 					$("#telCheck").css("color", "green");
+					tel_Check = true;
 				}else if(tcheck == 1 || tcheck == -1){
 					$("#telCheck").html("사용 불가능한 전화번호입니다.");
 					$("#telCheck").css("color", "red");
 					rtt = false;
+					tel_Check = false;
 				}
 			}
 		});
@@ -144,12 +178,12 @@
 	function join() {
 		
 		var id = document.fr.id.value;
-		var idl = document.fr.id.value.length;
+		/* var idl = document.fr.id.value.length; */
 		var pw = document.fr.pw.value;
 		var pw0 = document.fr.pw.value.length;
 		var pw1 = document.fr.pw1.value;
 		var name = document.fr.name.value;
-		var nickname= document.fr.nickname.value.length;
+		/* var nickname= document.fr.nickname.value.length; */
 		var age = document.fr.age.value;
 		var gender = document.fr.gender[0].checked;
 		var gender1 = document.fr.gender[1].checked;	
@@ -158,12 +192,17 @@
 		var addr2 = document.fr.addr2.value;
 		var addr3 = document.fr.addr3.value; 
 		var tel = document.fr.tel.value;
-
-/* 		if (idl < 5 || idl >= 13 ) {
+		
+		
+		if ($("#certBtn").is(":disabled")) {
+			email_Check=true;
+		}
+		
+/*  		if (idl < 5 || idl >= 13 ) {
 			alert("아이디는 5~13자리 사이로 만들어주세요.");
 			document.fr.id.focus();
 			return false;
-		} */
+		}  */
 		
 		if (pw0 < 7 || pw0 > 17 ) {
 			alert("비밀번호는 8~16자리 사이로 만들어주세요.");
@@ -177,11 +216,22 @@
 			return false;
 		} 
 		
-		if(nickname > 15){
+ 		if (name == null) {
+			alert("이름을 적어주세요.");
+			document.fr.name.focus();
+			return false;
+		}
+ 		
+ 		/* if(nickname == null){
+			document.fr.nickname.focus();
+			return false;
+ 		} */
+ 		
+/*  		if(nickname > 15){
 			alert("별명은 14자 이하로 작성해주세요.");
 			document.fr.nickname.focus();
 			return false;
-		}
+		} */
 		
 		if (/^[0-9]{1,3}/.test(age) == false) {
 			alert("나이는 숫자를 적어주세요");
@@ -197,6 +247,12 @@
 		if(/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/.test(email) == false){
 			alert("이메일의 양식이 맞지 않습니다.");
 			document.fr.email.focus();
+			return false;
+		}
+		
+		if (document.getElementById("certBtn").disabled == false) {
+			alert("메일 인증이 완료되지 않았습니다.");
+			$("#email").focus();
 			return false;
 		}
 		
@@ -221,6 +277,9 @@
 			return false;
 		}
 
+		if(email_Check&&id_Check&&nick_Check&&tel_Check){
+			$("#joinForm").submit();
+		}
 		
 	}
 	
@@ -281,7 +340,7 @@
 	
 	<fieldset>
 		<legend>회원가입</legend>
-		<form action="joinPro.jsp" method="post" name="fr">
+		<form action="joinPro.jsp" method="post" name="fr" id="joinForm">
 		  <div>	
 			<label>아이디</label>
 			<input type="text" name="id" id="id" onblur="idChecked();" required>
@@ -309,7 +368,8 @@
 			<input type="radio" name="gender" id="gender" value="여">여<br>
 			
 			<label>이메일</label>
-			<input type="email" name="email" id="email" onblur="emailCheck();" required>
+			<input type="email" name="email" id="email" required>
+			<input type="button" id="certBtn" value="메일인증" onclick="emailCheck();">
 			<span id="emailCheck"></span><br>
 			
 			<input type="text" name="addr1" id="addr1" placeholder="우편번호" required readonly="readonly">
@@ -322,7 +382,7 @@
 			<input type="text" name="tel" id="tel" onblur="telCheck();" placeholder="(-)을 넣어주세요. "  required><br>
 			<span id="telCheck"></span><br>
 			
-			<input type="submit" value="회원가입" onclick="return join()">
+			<input type="submit" value="회원가입" onclick="join()">
 			<input type="reset" value="초기화">
 		</form>
 	</fieldset>

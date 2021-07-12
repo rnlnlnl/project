@@ -89,7 +89,7 @@ public class MemberService {
 
 class GoogleAuthentication extends Authenticator{
 	
-	PasswordAuthentication passAuth = new PasswordAuthentication("gksaudwls124@gmail.com", "yhhqskxkgojlcmen");
+	PasswordAuthentication passAuth = new PasswordAuthentication("gksaudwls124@gmail.com", "ridmxilaudovymkq");
 	
 	public PasswordAuthentication getPasswordAuthentication(){
 		return this.passAuth;

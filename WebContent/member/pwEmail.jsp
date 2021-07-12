@@ -19,7 +19,7 @@
 				opener.document.getElementById("email").readOnly = true;
 				$("#emailCheck",parent.opener.document).text("이메일 인증이 완료되었습니다.");
 				opener.document.getElementById("certBtn").disabled = true;
-				window.close();
+				window.open('','_self').close();
 			}else{
 				alert("인증번호가 잘못되었습니다.");
 				return false;
