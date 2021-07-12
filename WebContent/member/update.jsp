@@ -187,9 +187,9 @@
 			<input type="text" name="id" value="<%=mbean.getId()%>" readonly><br>
 			
 			<label>비밀번호</label>
-			<input type="password" name="pw" id="pw" value="<%=mbean.getPw()%>">
+			<input type="password" name="pw" id="pw" value="<%=mbean.getPw()%>"><br>
 			<label>비밀번호 확인</label>
-			<input type="password" name="pw1" id="pw1" onblur="checkpw();">
+			<input type="password" name="pw1" id="pw1" onblur="checkpw();"><br>
 			<span id="passCheck"></span>
 			
 			<label>이름</label>

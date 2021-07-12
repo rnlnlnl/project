@@ -26,104 +26,82 @@
 		var id = $("#id").val();
 		var rti = true;
 		
-		if(idl < 5 || idl > 14 ){
-			$("#idCheck").css("color", "red");
-	        $("#idCheck").text("5~13글자 사이로 입력해주세요.");
-	        id_Check = false;
-	        return;
-		}else{
-	 		$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/idCheck.jsp",
-				data: ({
-					id: $("#id").val()
-				}),
-				
-				success: function (result) { 
-					console.log("뭐냐"+result);
-					if (result == 0) {
-						$("#idCheck").html("사용가능한 아이디입니다.");
-						$("#idCheck").css("color", "green");
-						tri = true;
-						id_Check = true;
-					}else if(result == 1){
-						$("#idCheck").html("이미 사용중인 아이디입니다.");
-						$("#idCheck").css("color", "red"); 
-						rti = false;
-						id_Check = false;
-					}
+	 	$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/idCheck.jsp",
+			data: ({
+				id: $("#id").val()
+			}),
+			
+			success: function (result) { 
+				console.log("뭐냐"+result);
+				if (result == 0) {
+					$("#idCheck").html("사용가능한 아이디입니다.");
+					$("#idCheck").css("color", "green");
+					tri = true;
+					id_Check = true;
+				}else if(result == 1){
+					$("#idCheck").html("이미 사용중인 아이디입니다.");
+					$("#idCheck").css("color", "red"); 
+					rti = false;
+					id_Check = false;
 				}
-			});
-		}
+			}
+		});
 	}
  	
 	
 	function nickCheck() {
-		var nickname1 = $("#nickname").length;
 		var nickname = $("#nickname").val();
 		var rtn = true;
 		
-		if(nickname1 > 16){
-			$("#nickCheck").css("color", "red"); 
-			$("#nickCheck").text("닉네임을 15자 이내로 적어주세요.");
-			nick_Check = false;
-			return;
-		}else{
-			$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
-				data : ({
-					nickname: $("#nickname").val()
-				}),
-				success: function(check) {
-					if (check == 0) {
-						$("#nickCheck").html("사용가능한 닉네임입니다.");
-						$("#nickCheck").css("color", "green");
-		                nick_Check = true;
-					}else if(check == 1){
-						$("#nickCheck").html("이미 사용중인 닉네임입니다.");
-						$("#nickCheck").css("color", "red"); 
-						rtn = false;
-						nick_Check = false;
-					}
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
+			data : ({
+				nickname: $("#nickname").val()
+			}),
+			success: function(check) {
+				if (check == 0) {
+					$("#nickCheck").html("사용가능한 닉네임입니다.");
+					$("#nickCheck").css("color", "green");
+		               nick_Check = true;
+				}else if(check == 1){
+					$("#nickCheck").html("이미 사용중인 닉네임입니다.");
+					$("#nickCheck").css("color", "red"); 
+					rtn = false;
+					nick_Check = false;
 				}
-			});
-		}
+			}
+		});
 	}
 	
 	function emailCheck() {
 		var email = $("#email").val();
 		var rte = true;
 		
-		if(email == ""){
-			$("#emailCheck").css("color", "red");
-			$("#emailCheck").text("이메일을 적어주세요.");
-			email_Check = false;
-			return;
-		}else{
-			$.ajax({
-				type: "post",
-				url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
-				data : ({
-					email: $("#email").val()
-				}),
-				success: function (echeck) {
-					if(echeck == 0){
-						$("#emailCheck").html("사용 가능한 이메일입니다.");
-						$("#emailCheck").css("color", "green");
-						window.open('${contextPath}/member/emailCert.do?email='+email,'Email 인증요청','width=500, height=400, menubar=no, status=no, toolbar=no');
-					}else if(echeck == 1){
-						$("#emailCheck").html("사용 불가능한 이메일 입니다.");
-						$("#emailCheck").css("color", "red");
-						rte = false;
-						email_Check = false;
-					}
-				},
-				error: function() {
-					alert("회원가입 이메일 인증 애러");
+		$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/member/emailCheck.jsp",
+			data : ({
+				email: $("#email").val()
+			}),
+			success: function (echeck) {
+				if(echeck == 0){
+					$("#emailCheck").html("사용 가능한 이메일입니다.");
+					$("#emailCheck").css("color", "green");
+					window.open('${contextPath}/member/emailCert.do?email='+email,'Email 인증요청','width=500, height=400, menubar=no, status=no, toolbar=no');
+				}else if(echeck == 1){
+					$("#emailCheck").html("사용 불가능한 이메일 입니다.");
+					$("#emailCheck").css("color", "red");
+					rte = false;
+					email_Check = false;
 				}
-			});
-		}
+			},
+			error: function() {
+				alert("회원가입 이메일 인증 애러");
+			}
+		});
 	}
 	
 	// 전화번호 중복 검사
@@ -178,12 +156,12 @@
 	function join() {
 		
 		var id = document.fr.id.value;
-		/* var idl = document.fr.id.value.length; */
+		var idl = document.fr.id.value.length;
 		var pw = document.fr.pw.value;
 		var pw0 = document.fr.pw.value.length;
 		var pw1 = document.fr.pw1.value;
 		var name = document.fr.name.value;
-		/* var nickname= document.fr.nickname.value.length; */
+		var nickname= document.fr.nickname.value.length;
 		var age = document.fr.age.value;
 		var gender = document.fr.gender[0].checked;
 		var gender1 = document.fr.gender[1].checked;	
@@ -198,11 +176,11 @@
 			email_Check=true;
 		}
 		
-/*  		if (idl < 5 || idl >= 13 ) {
+		if (idl < 5 || idl >= 13 ) {
 			alert("아이디는 5~13자리 사이로 만들어주세요.");
 			document.fr.id.focus();
 			return false;
-		}  */
+		} 
 		
 		if (pw0 < 7 || pw0 > 17 ) {
 			alert("비밀번호는 8~16자리 사이로 만들어주세요.");
@@ -216,22 +194,17 @@
 			return false;
 		} 
 		
- 		if (name == null) {
+ 		if (name == "") {
 			alert("이름을 적어주세요.");
 			document.fr.name.focus();
 			return false;
 		}
  		
- 		/* if(nickname == null){
-			document.fr.nickname.focus();
-			return false;
- 		} */
- 		
-/*  		if(nickname > 15){
+	  	if(nickname > 15 || nickname == ""){
 			alert("별명은 14자 이하로 작성해주세요.");
 			document.fr.nickname.focus();
 			return false;
-		} */
+		}
 		
 		if (/^[0-9]{1,3}/.test(age) == false) {
 			alert("나이는 숫자를 적어주세요");
@@ -364,8 +337,8 @@
 			<input type="text" name="age" id="age" required><br>
 			
 			<label>성별</label>
-			<input type="radio" name="gender" id="gender" value="남">남
-			<input type="radio" name="gender" id="gender" value="여">여<br>
+			<input type="radio" name="gender" id="gender" value="m">남
+			<input type="radio" name="gender" id="gender" value="g">여<br>
 			
 			<label>이메일</label>
 			<input type="email" name="email" id="email" required>

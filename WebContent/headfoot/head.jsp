@@ -12,6 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="main.jsp"><img alt="gameItem" src="image/logo.jpg"></a><br>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String id = (String)session.getAttribute("id");
