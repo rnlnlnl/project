@@ -59,7 +59,7 @@
 			}catch(Exception e){
 				
 			}
-		
+		response.sendRedirect("login.jsp");
 	%>
 	
 	

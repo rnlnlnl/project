@@ -11,7 +11,8 @@
 	
 	
 	<form action="findIdPro.jsp" method="post">
-		<input type="email" name="email" id="email">
+		<label>이메일 </label>
+		<input type="email" name="email" id="email" placeholder="이메일을 적어주세요."><br>
 		
 		<input type="submit" value="아이디  이메일로 받기">
 	</form>

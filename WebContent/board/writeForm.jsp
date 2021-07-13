@@ -18,9 +18,22 @@
 <legend>자유게시판 글쓰기</legend>
 	<form action="writePro.jsp" method="post">
 		<input type="hidden" name="nickname" value="<%=nickname%>">
-		<input type="text" id="title" name="title" required><br>
-		<textarea rows="10" cols="50" name="content"></textarea><br>
-		
+		<table border="1">
+			<tr>
+				<td>제목</td>
+				<td>첨부파일</td>
+			</tr>
+			<tr>
+				<td><input type="text" id="title" name="title" required></td>
+				<td><input type="file" id="file" name="file" ></td>
+			</tr>
+			<tr>
+				<td colspan="2">내용</td>
+			</tr>
+			<tr>
+				<td colspan="2"><textarea rows="10" cols="50" name="content"></textarea></td>
+			</tr>
+		</table>
 		<input type="submit" value="글쓰기">
 	</form>
 </fieldset>

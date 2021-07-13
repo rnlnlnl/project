@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -346,34 +347,49 @@ public class MemberDAO {
 
 	}
 	
-	// 이메일 이용한 비밀번호 찾기
-	public int pwEmail(String id){
-		int check = 0;
+	// 랜덤 비밀번호 생성
+	public String creatPw(){
+		String randomPw = UUID.randomUUID().toString().replaceAll("-", "");
+		randomPw = randomPw.substring(0, 8);
 		
+		return randomPw;
+	}
+	
+	// 이메일 이용한 비밀번호 찾기
+	public String findPw(String id, String email){
+		 String randomPw = creatPw();
 		try {
 			
 			conn = getConnection();
 			
-			sql = "select email from member where id = ?";
+			sql = "select pw from member where id = ? and email = ?";
 			
 			pst = conn.prepareStatement(sql);
 			
+
 			pst.setString(1, id);
+			pst.setString(2, email);
 			
 			rs = pst.executeQuery();
 			
 			if (rs.next()) {
-				check = 1;
-			}else{
-				check = 0;
+				
+				sql = "update member set pw = ? where id = ? and email = ?";
+				
+				pst = conn.prepareStatement(sql);
+				
+				pst.setString(1, randomPw);
+				pst.setString(2, id);
+				pst.setString(3, email);
+				
+				pst.executeUpdate();
 			}
-			
 		} catch (Exception e) {
-			System.out.println("이메일 찾기에서 오류"+e);
+			System.out.println("비밀번호 찾기에서 오류"+e);
 		}finally {
 			closeAll(conn, pst, rs);
 		}
-		return check;
+		return randomPw;
 	}
 	
 	// 이메일을 이용한 아이디 찾기

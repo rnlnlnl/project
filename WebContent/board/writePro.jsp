@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,6 +18,28 @@
 		<jsp:setProperty property="*" name="bbean"/>
 		
 	<%
+		int maxSize = 100*1024*1024*1024; // 100MB
+		
+		String realPath = request.getRealPath("/upLoadFile");
+		
+		MultipartRequest multi = 
+						new MultipartRequest(
+								request,
+								realPath,
+								maxSize,
+								"UTF-8",
+								new DefaultFileRenamePolicy()
+								);
+		
+		String nickname = multi.getParameter("nickname");
+		String title = multi.getParameter("title");
+		String file = multi.getParameter("file");
+		String content = multi.getParameter("content");
+		
+		bbean.setNickname(nickname);
+		bbean.setTitle(title);
+		bbean.setFile(file);
+		bbean.setContent(content);
 		// ip주소 추가
 		bbean.setIp(request.getRemoteAddr());
 	
