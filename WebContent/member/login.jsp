@@ -19,7 +19,8 @@
 			
 			<input type="submit" value="로그인">
 		</form>
-		<a href="pwEmail.jsp">비밀번호 찾기</a>
+		<a href="findId.jsp">아이디 찾기</a>
+		<a href="findPw.jsp">비밀번호 찾기</a>
 	</fieldset>
 	
 	

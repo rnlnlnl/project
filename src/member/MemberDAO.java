@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -374,8 +376,34 @@ public class MemberDAO {
 		return check;
 	}
 	
-	
-	
+	// 이메일을 이용한 아이디 찾기
+	public String findId(String email){
+		String id ="";
+		
+		try {
+			conn = getConnection();
+			
+			sql = "select id from member where email = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, email);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				id = rs.getString("id");
+			}else{
+				id = "";
+			}
+			
+		} catch (Exception e) {
+			System.out.println("아이디 찾기에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return id;
+	}
 	
 	//회원탈퇴
 	public int deleteMember(String nickname, String pw){

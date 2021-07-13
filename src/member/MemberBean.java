@@ -2,6 +2,9 @@ package member;
 
 import java.sql.Timestamp;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+
 public class MemberBean {
 
 	private String id;
@@ -92,10 +95,5 @@ public class MemberBean {
 	public String toString() {
 		return "MemberBean [id=" + id + ", pw=" + pw + "]";
 	}
-	
-	
-	
-	
-	
-}
 
+}

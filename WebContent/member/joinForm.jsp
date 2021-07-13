@@ -65,7 +65,7 @@
 				if (check == 0) {
 					$("#nickCheck").html("사용가능한 닉네임입니다.");
 					$("#nickCheck").css("color", "green");
-		               nick_Check = true;
+		            nick_Check = true;
 				}else if(check == 1){
 					$("#nickCheck").html("이미 사용중인 닉네임입니다.");
 					$("#nickCheck").css("color", "red"); 
@@ -249,9 +249,11 @@
 			document.fr.tel.focus();
 			return false;
 		}
-
-		if(email_Check&&id_Check&&nick_Check&&tel_Check){
+		
+		if(email_Check == true && id_Check == true && nick_Check == true && tel_Check == true){
 			$("#joinForm").submit();
+		}else{
+			return false;
 		}
 		
 	}
@@ -355,7 +357,7 @@
 			<input type="text" name="tel" id="tel" onblur="telCheck();" placeholder="(-)을 넣어주세요. "  required><br>
 			<span id="telCheck"></span><br>
 			
-			<input type="submit" value="회원가입" onclick="join()">
+			<input type="button" value="회원가입" onclick="join()">
 			<input type="reset" value="초기화">
 		</form>
 	</fieldset>
