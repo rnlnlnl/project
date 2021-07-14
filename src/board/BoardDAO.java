@@ -155,7 +155,7 @@ public class BoardDAO {
 				pst.setInt(8, 0);
 				pst.setString(9, bbean.getIp());
 				pst.setString(10, bbean.getFile());
-			
+				
 				pst.executeUpdate();
 				
 				System.out.println("계시글 작성 완료");

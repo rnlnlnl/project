@@ -16,7 +16,7 @@
 
 <fieldset>
 <legend>자유게시판 글쓰기</legend>
-	<form action="writePro.jsp" method="post">
+	<form action="writePro.jsp" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="nickname" value="<%=nickname%>">
 		<table border="1">
 			<tr>

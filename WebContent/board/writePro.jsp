@@ -18,9 +18,10 @@
 		<jsp:setProperty property="*" name="bbean"/>
 		
 	<%
-		int maxSize = 100*1024*1024*1024; // 100MB
+		int maxSize = 10 * 1024 * 1024; // 100MB
 		
 		String realPath = request.getRealPath("/upLoadFile");
+		
 		
 		MultipartRequest multi = 
 						new MultipartRequest(
@@ -31,18 +32,14 @@
 								new DefaultFileRenamePolicy()
 								);
 		
-		String nickname = multi.getParameter("nickname");
-		String title = multi.getParameter("title");
-		String file = multi.getParameter("file");
-		String content = multi.getParameter("content");
+		bbean.setNickname(multi.getParameter("nickname"));
+		bbean.setTitle(multi.getParameter("title"));
+		bbean.setFile(multi.getFilesystemName("file"));
+		bbean.setContent(multi.getParameter("content"));
 		
-		bbean.setNickname(nickname);
-		bbean.setTitle(title);
-		bbean.setFile(file);
-		bbean.setContent(content);
 		// ip주소 추가
 		bbean.setIp(request.getRemoteAddr());
-	
+		
 		BoardDAO bDAO = new BoardDAO();
 		
 		bDAO.insertBoard(bbean);

@@ -24,7 +24,8 @@
 		bDAO.updateReadcount(num);
 		
 		BoardBean bbean = bDAO.getBoard(num);
-		
+		String imgFile = bbean.getFile();
+				
 	%>
 	
 	<h3><%=bbean.getNickname()%>의 글</h3>
@@ -47,8 +48,18 @@
 			<td colspan="5"><%=bbean.getFile()%></td>
 		</tr>
 		<tr>
-			<td>첨부파일 다운</td>
-			<td>???</td>
+			<td>첨부파일 </td>
+			<td>
+				<%if(imgFile != null){%>
+					<%if(imgFile.substring(imgFile.length()-3, imgFile.length()).equals("jpg") || imgFile.substring(imgFile.length()-3, imgFile.length()).equals("png") || imgFile.substring(imgFile.length()-3, imgFile.length()).equals("gif")){ %>
+						<img src="../upLoadFile/<%=bbean.getFile()%>" width="200" height="250">
+					<%}else{ %>
+						<a href="filedown.jsp?file_name=<%=bbean.getFile()%>"><%=bbean.getFile()%></a>
+					<%} %>
+				<%} if(imgFile == null){ %>
+					<b>파일이 없습니다.</b>
+				<%}%>
+			</td>
 		</tr>
 		<tr>
 			<td>글 내용</td>

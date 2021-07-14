@@ -23,7 +23,8 @@
 	mbean = (MemberBean)list.get(0);
 %>
 <script type="text/javascript">
-	
+	var nick_Check = false;
+	var tel_Check = false;
 	function update() {
 		
 		var id = document.fr.id.value;
@@ -49,6 +50,12 @@
 			return false;
 		}
 		
+		if(nick_Check == true && tel_Check == true){
+			$("#fr").submit();
+		}else{
+			return false;
+		}
+		
 	}
 	
 	//닉네임중복 검사
@@ -69,13 +76,18 @@
 					$("#nickCheck").html("사용 가능한 닉네임입니다.");
 					$("#nickCheck").css("color", "green");
 					rtn = true;
+					nick_Check = true;
 				}else if(check == 1){
 					$("#nickCheck").html("사용 불가능한 닉네임입니다.");
 					$("#nickCheck").css("color", "red");
 					rtn = false;
+					nick_Check = false;
 				}
 			}
 		});	
+		if(nickname == <%=mbean.getNickname()%>){
+			nick_Check = true;
+		}
 	}
 	
 	// 전화번호 중복 검사
@@ -95,13 +107,18 @@
 					$("#telCheck").html("사용 가능한 전화번호입니다.");
 					$("#telCheck").css("color", "green");
 					rtt = true;
+					tel_Check = true;
 				}else if(tcheck == 1){
 					$("#telCheck").html("사용 불가능한 전화번호입니다.");
 					$("#telCheck").css("color", "red");
 					rtt = false;
+					tel_Check = false;
 				}
 			}
 		});
+		if(tel == <%=mbean.getTel()%>){
+			tel_Check = true;
+		}
 	}
 	
 	
@@ -182,22 +199,22 @@
 	
 	<fieldset>
 		<legend>내정보 변경</legend>
-		<form action="updatePro.jsp" method="post" name="fr">
+		<form action="updatePro.jsp" method="post" name="fr" id="fr">
 			<label>아이디</label>
 			<input type="text" name="id" value="<%=mbean.getId()%>" readonly><br>
 			
 			<label>비밀번호</label>
 			<input type="password" name="pw" id="pw" value="<%=mbean.getPw()%>"><br>
 			<label>비밀번호 확인</label>
-			<input type="password" name="pw1" id="pw1" onblur="checkpw();"><br>
-			<span id="passCheck"></span>
+			<input type="password" name="pw1" id="pw1" onblur="checkpw();">
+			<span id="passCheck"></span><br>
 			
 			<label>이름</label>
 			<input type="text" name="name" value="<%=mbean.getName()%>" readonly><br>
 			
 			<label>닉네임</label>
-			<input type="text" name="nickname" value="<%=mbean.getNickname()%>" onblur="nickCheck();" required><br>
-			<span id="nickCheck"></span><br>
+			<input type="text" name="nickname" value="<%=mbean.getNickname()%>" readonly><br>
+			
 			
 			<label>나이</label>
 			<input type="text" name="age" value="<%=mbean.getAge()%>" required><br>
@@ -215,7 +232,7 @@
 			<input type="text" name="tel" value="<%=mbean.getTel()%>" onblur="telCheck();" required><br>
 			<span id="telCheck"></span><br>
 			
-			<input type="submit" value="변경하기" onclick="return update();">
+			<input type="button" value="변경하기" onclick="update()">
 			<button><a href="../main.jsp">돌아가기</a></button>
 		</form>
 		<button><a href="./delete.jsp">회원탈퇴</a></button>

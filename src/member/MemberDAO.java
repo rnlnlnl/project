@@ -237,7 +237,7 @@ public class MemberDAO {
 		try {
 			
 			conn = getConnection();
-			sql = "select tel from member where tel = ?";
+			sql = "select tel, id from member where tel = ?";
 			
 			pst = conn.prepareStatement(sql);
 			pst.setString(1, tel);
@@ -282,6 +282,7 @@ public class MemberDAO {
 				
 				beanList.setId(rs.getString("id"));
 				beanList.setName(rs.getString("name"));
+				beanList.setPw(rs.getString("pw"));
 				beanList.setNickname(rs.getString("nickname"));
 				beanList.setAge(rs.getInt("age"));
 				beanList.setEmail(rs.getString("email"));
@@ -321,7 +322,7 @@ public class MemberDAO {
 			
 			if (rs.next()) {
 				
-				sql = "update member set nickname = ?, pass = ?, age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
+				sql = "update member set nickname = ?, pw = ?, age = ?, add1 = ?, add2=?, add3=?, tel=? where id = ?";
 				
 				pst = conn.prepareStatement(sql);
 				
