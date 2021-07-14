@@ -23,7 +23,7 @@
 	mbean = (MemberBean)list.get(0);
 %>
 <script type="text/javascript">
-	var nick_Check = false;
+	
 	var tel_Check = false;
 	function update() {
 		
@@ -44,81 +44,7 @@
 			return false;
 		} 
 		
-		if(nickname > 15){
-			alert("별명은 14자 이하로 작성해주세요.");
-			document.fr.nickname.focus();
-			return false;
-		}
 		
-		if(nick_Check == true && tel_Check == true){
-			$("#fr").submit();
-		}else{
-			return false;
-		}
-		
-	}
-	
-	//닉네임중복 검사
-	function nickCheck(rtn) {
-		var nickname = document.fr.nickname.value;
-		var rtn = true;
-		
-		$.ajax({
-			type: "post",
-			url: "${pageContext.request.contextPath}/member/nickCheck.jsp",
-			data:({
-				nickname : document.fr.nickname.value
-				
-			}),
-			success: function (check) {
-				console.log("닉네임"+check);
-				if(check == 0){
-					$("#nickCheck").html("사용 가능한 닉네임입니다.");
-					$("#nickCheck").css("color", "green");
-					rtn = true;
-					nick_Check = true;
-				}else if(check == 1){
-					$("#nickCheck").html("사용 불가능한 닉네임입니다.");
-					$("#nickCheck").css("color", "red");
-					rtn = false;
-					nick_Check = false;
-				}
-			}
-		});	
-		if(nickname == <%=mbean.getNickname()%>){
-			nick_Check = true;
-		}
-	}
-	
-	// 전화번호 중복 검사
-	function telCheck() {
-		var tel = document.fr.tel.value;
-		var rtt = true;
-		
-		$.ajax({
-			type: "post",
-			url: "${pageContext.request.contextPath}/member/telCheck.jsp",
-			data : ({
-				tel: document.fr.tel.value
-			}),
-			success: function (tcheck) {
-				console.log("뭐냐"+tcheck);
-				if(tcheck == 0){
-					$("#telCheck").html("사용 가능한 전화번호입니다.");
-					$("#telCheck").css("color", "green");
-					rtt = true;
-					tel_Check = true;
-				}else if(tcheck == 1){
-					$("#telCheck").html("사용 불가능한 전화번호입니다.");
-					$("#telCheck").css("color", "red");
-					rtt = false;
-					tel_Check = false;
-				}
-			}
-		});
-		if(tel == <%=mbean.getTel()%>){
-			tel_Check = true;
-		}
 	}
 	
 	
@@ -229,7 +155,7 @@
 			<input type="text" name="addr3" id="addr3" value="<%=mbean.getAddr3()%>" placeholder="상세주소" required><br>
 			
 			<label>전화번호</label>
-			<input type="text" name="tel" value="<%=mbean.getTel()%>" onblur="telCheck();" required><br>
+			<input type="text" name="tel" value="<%=mbean.getTel()%>" required><br>
 			<span id="telCheck"></span><br>
 			
 			<input type="button" value="변경하기" onclick="update()">
