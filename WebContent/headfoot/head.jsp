@@ -40,7 +40,7 @@
 <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
   <ul class="navbar-nav">
     <li class="nav-item active">
-      <a href="./board/deal.jsp" class="nav-link">거래소</a>
+      <a href="./itemdeal/dealBoard.jsp" class="nav-link">거래소</a>
     </li>
     <li class="nav-item">
       <a href="./board/boardList.jsp" class="nav-link">이미지 계시판</a>

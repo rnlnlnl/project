@@ -31,6 +31,7 @@
 		var age = document.fr.age.value;
 		var tel = document.fr.tel.value;
 		var nickname = document.fr.nickname.value;
+		var addr3 = document.fr.addr3.value; 
 		
 		if (/^[0-9]{1,3}/.test(age) == false) {
 			alert("나이는 숫자를 적어주세요");
@@ -44,7 +45,10 @@
 			return false;
 		} 
 		
-		
+		if(addr3 == ""){
+			alert("주소를 적어주세요");
+			return false;
+		}
 	}
 	
 	
@@ -158,7 +162,7 @@
 			<input type="text" name="tel" value="<%=mbean.getTel()%>" required><br>
 			<span id="telCheck"></span><br>
 			
-			<input type="button" value="변경하기" onclick="update()">
+			<input type="submit" value="변경하기" onclick="return update()">
 			<button><a href="../main.jsp">돌아가기</a></button>
 		</form>
 		<button><a href="./delete.jsp">회원탈퇴</a></button>

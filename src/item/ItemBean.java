@@ -5,7 +5,7 @@ import java.util.Date;
 public class ItemBean {
 	
 	private int num;
-	private String id;
+	private String gname;
 	private String nickname;
 	private String title;
 	private String content;
@@ -16,17 +16,20 @@ public class ItemBean {
 	private Date date;
 	private String ip;
 	private String file;
+	private int like;
+	
+	
 	public int getNum() {
 		return num;
 	}
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getId() {
-		return id;
+	public String getgname() {
+		return gname;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setgname(String gname) {
+		this.gname = gname;
 	}
 	public String getNickname() {
 		return nickname;
@@ -88,12 +91,20 @@ public class ItemBean {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	
+	public int getLike() {
+		return like;
+	}
+	public void setLike(int like) {
+		this.like = like;
+	}
 	@Override
 	public String toString() {
-		return "ItemBean [num=" + num + ", id=" + id + ", nickname=" + nickname + ", title=" + title + ", content="
+		return "ItemBean [num=" + num + ", gname=" + gname + ", nickname=" + nickname + ", title=" + title + ", content="
 				+ content + ", readcount=" + readcount + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq="
-				+ re_seq + ", date=" + date + ", ip=" + ip + ", file=" + file + "]";
+				+ re_seq + ", date=" + date + ", ip=" + ip + ", file=" + file + ", like=" + like + "]";
 	}
+	
 	
 	
 	
