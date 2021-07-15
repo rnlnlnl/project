@@ -17,18 +17,24 @@ public class ItemBean {
 	private String ip;
 	private String file;
 	private int like;
+	private int price;
 	
-	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	public int getNum() {
 		return num;
 	}
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getgname() {
+	public String getGname() {
 		return gname;
 	}
-	public void setgname(String gname) {
+	public void setGname(String gname) {
 		this.gname = gname;
 	}
 	public String getNickname() {
@@ -100,10 +106,12 @@ public class ItemBean {
 	}
 	@Override
 	public String toString() {
-		return "ItemBean [num=" + num + ", gname=" + gname + ", nickname=" + nickname + ", title=" + title + ", content="
-				+ content + ", readcount=" + readcount + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq="
-				+ re_seq + ", date=" + date + ", ip=" + ip + ", file=" + file + ", like=" + like + "]";
+		return "ItemBean [num=" + num + ", gname=" + gname + ", nickname=" + nickname + ", title=" + title
+				+ ", content=" + content + ", readcount=" + readcount + ", re_ref=" + re_ref + ", re_lev=" + re_lev
+				+ ", re_seq=" + re_seq + ", date=" + date + ", ip=" + ip + ", file=" + file + ", like=" + like
+				+ ", price=" + price + "]";
 	}
+	
 	
 	
 	

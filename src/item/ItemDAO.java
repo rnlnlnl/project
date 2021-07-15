@@ -92,7 +92,7 @@ private Connection getConnection() throws Exception{
 			while (rs.next()) {
 				ItemBean ibean = new ItemBean();
 				ibean.setContent(rs.getString("content"));
-				ibean.setgname(rs.getString("gname"));
+				ibean.setGname(rs.getString("gname"));
 				ibean.setDate(rs.getDate("date"));
 				ibean.setFile(rs.getString("file"));
 				ibean.setIp(rs.getString("ip"));
@@ -104,6 +104,7 @@ private Connection getConnection() throws Exception{
 				ibean.setReadcount(rs.getInt("readcount"));
 				ibean.setTitle(rs.getString("title"));
 				ibean.setLike(rs.getInt("like"));
+				ibean.setPrice(rs.getInt("price"));
 				
 				itemList.add(ibean);
 			}
@@ -117,11 +118,90 @@ private Connection getConnection() throws Exception{
 		return itemList;
 	}
 	
+	public void insertItem(ItemBean ibean){
+		int num = 0;
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select max(num) from item";
+			
+			pst = conn.prepareStatement(sql);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				
+				num = rs.getInt(1)+1;
+				
+				sql = "insert into item (num, gname, nickname, title, content, readcount, re_ref,re_lev,"
+						+ "re_seq, date,ip,file,like,price) values(?,?,?,?,?,?,?,?,?,now(),?,?,?,?) ";
+				
+				pst = conn.prepareStatement(sql);
+				
+				pst.setInt(1, num);
+				pst.setString(2, ibean.getGname());
+				pst.setString(3, ibean.getNickname());
+				pst.setString(4, ibean.getTitle());
+				pst.setString(5, ibean.getContent());
+				pst.setInt(6, 0);
+				pst.setInt(7, num);
+				pst.setInt(8, 0);
+				pst.setInt(9, 0);
+				pst.setString(10, ibean.getIp());
+				pst.setString(11, ibean.getFile());
+				pst.setInt(12, 0);
+				pst.setInt(13, ibean.getPrice());
+				
+				pst.executeUpdate();
+				
+			}
+		} catch (Exception e) {
+			System.out.println("판매물품 등록에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+	}
 	
+	public int updateMemberShip(String nickname){
+		int memberShip = 0;
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select sum(price) from item where nickname = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, nickname);
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				memberShip = rs.getInt("sum(price)");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("멤버쉽 가지고 오는데에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return memberShip;
+	}
 	
-	
-	
-	
+	public ItemBean getBoard(int num){
+		ItemBean ibean = null;
+		
+		try {
+			
+		} catch (Exception e) {
+			System.out.println("게시판 가져오기 실패");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return ibean; 
+	}
 	
 	
 	

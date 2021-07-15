@@ -23,7 +23,7 @@
 		if(nickname == "null"){
 			location.href="../member/login.jsp";
 		}else if(nickname != null){
-			location.href="writeForm.jsp";
+			location.href="iwriteForm.jsp";
 		}
 	}
 	
@@ -80,8 +80,8 @@
 				ibean = (ItemBean)itemList.get(i);
 	%>	
 		<tr>
-			<td><%=ibean.getgname()%></td>
-			<td><%=ibean.getTitle() %></td>
+			<td><%=ibean.getGname()%></td>
+			<td><a href="itemcontent.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>"><%=ibean.getTitle()%></a></td>
 			<td><%=ibean.getNickname()%></td>
 			<td><%=ibean.getDate()%></td>
 			<td><%=ibean.getReadcount()%></td>
@@ -114,49 +114,24 @@
 		//[이전]
 		if(startPage > pageBlock){
 			%>
-				<a href="boardList.jsp?pageNum=<%=startPage-pageBlock%>">[이전]</a>
+				<a href="dealBoard.jsp?pageNum=<%=startPage-pageBlock%>">[이전]</a>
 			<%
 		}
 		// [1...10] [11...20] [21...30] ...
 		for(int i =startPage; i<=endPage; i++){
 			%>
-				<a href="boardList.jsp?pageNum=<%=i%>">[<%=i%>]</a>
+				<a href="dealBoard.jsp?pageNum=<%=i%>">[<%=i%>]</a>
 			<%
 		}
 		if(endPage < pageCount){
 			%>
-				<a href="boardList.jsp?pageNum=<%=startPage+pageBlock%>">[다음]</a>
+				<a href="dealBoard.jsp?pageNum=<%=startPage+pageBlock%>">[다음]</a>
 			<%
 		}
 	
 	}
 
-
-
 %>	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 </body>
 </html>
