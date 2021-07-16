@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<%
@@ -19,11 +20,109 @@
 		
 		ItemDAO iDAO = new ItemDAO();
 		
-		iDAO.updateMemberShip(nickname);
+		int memberShip = iDAO.updateMemberShip(nickname);
 		
 		ItemBean ibean = iDAO.getBoard(num);
-		 
+		String imgFile = ibean.getFile();
 		
 	%>
+	
+	<h3><%=ibean.getTitle()%></h3>
+	
+	<table border="1">
+		<tr>
+			<td>판매 물품</td>
+			<td>작성자</td>
+		</tr>
+		<tr>
+			<td rowspan="9"><img alt="판매물품" src="../upItemFile/<%=ibean.getFile()%>" width="450" height="550"> </td>
+			<td><%=ibean.getNickname()%>님</td>
+		</tr>
+		<tr>	
+			<td>등급</td>
+		</tr>
+		<tr>
+			<td>
+				<%
+					if(memberShip >= 0 && memberShip <= 100000){
+					%>
+						<img alt="브론즈" src="../image/브론즈.png" width="30" height="30">
+					<%	
+					}else if(memberShip > 100000 && memberShip <= 500000){
+					%>
+						<img alt="실버" src="../image/실버.png" width="30" height="30">
+					<%
+					}else if(memberShip > 500000 && memberShip <= 2000000){
+					%>
+						<img alt="골드" src="../image/골드.png" width="30" height="30">
+					<%
+					}else if(memberShip >= 10000000){
+					%>
+						<img alt="다이아" src="../image/다이아.png" width="30" height="30">
+					<%
+					}
+				%>
+			</td>
+		</tr>
+		<tr>
+			<td>가격</td>
+		</tr>
+		<tr>
+			<td><%=ibean.getPrice() %></td>
+		</tr>
+		<tr>
+			<td>작성일</td>
+		</tr>
+		<tr>
+			<td><%=ibean.getDate()%></td>
+		</tr>
+		<tr>
+			<td>내용</td>
+		</tr>
+		<tr>
+			<td><%=ibean.getContent() %></td>
+		</tr>
+		<tr>
+		<%
+			if(nickname != null){
+		%>
+				<td colspan="2"><button type="button">구매하기</button></td>
+		<%
+			}
+		%>
+		</tr>
+		<tr>
+			<td>
+			<%
+				if(nickname !=null && nickname.equals(ibean.getNickname())){
+			%>
+				<input type="button" value="수정하기" onclick="location.href='iupdateForm.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>';">
+				<input type="button" value="삭제하기" onclick="location.href='ideleteForm.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>';"><br>
+			<%
+				}
+			%>
+			<%
+				if(nickname != null){
+			%>
+				<input type="button" value="리뷰쓰기" onclick="location.href='ireWriteForm.jsp?num=<%=ibean.getNum()%>&re_ref=<%=ibean.getRe_ref()%>&re_lev=<%=ibean.getRe_lev()%>&re_seq=<%=ibean.getRe_seq()%>';">
+			<%		
+				}
+			%>
+				<input type="button" value="목록으로" onclick="location.href='dealBoard.jsp'">
+			</td>
+		</tr>
+	</table>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>

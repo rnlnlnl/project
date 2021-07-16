@@ -20,7 +20,7 @@
 	
 	
 	<fieldset>
-		<form action="updatePro.jsp?pageNum=<%=pageNum%>" method="post">
+		<form action="updatePro.jsp?pageNum=<%=pageNum%>" method="post" enctype="multipart/form-data">
 			<table border="1">
 				<tr>
 					<td>글쓴이</td>

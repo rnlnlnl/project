@@ -1,33 +1,41 @@
+<%@page import="item.ItemBean"%>
+<%@page import="item.ItemDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<%
+<%
 	request.setCharacterEncoding("UTF-8");
-	String id = (String)session.getAttribute("id");
-	String nickname = (String)session.getAttribute("nickname");
-	%>
 	
+	int num = Integer.parseInt(request.getParameter("num"));
+	String pageNum = request.getParameter("pageNum");
+	String nickname = (String)session.getAttribute("nickname");
+	String id = (String)session.getAttribute("id");
+	
+	ItemDAO iDAO = new ItemDAO();
+	ItemBean ibean = iDAO.getBoard(num);
+	
+%>
 	<fieldset>
-		<legend>아이템 거래</legend>
-		<form action="iwritePro.jsp" method="post" enctype="multipart/form-data">
+		<form action="iupdatePro.jsp?pageNum=<%=pageNum%>" method="post" enctype="multipart/form-data">
 			<input type="text" name="nickname" value="<%=nickname%>" readonly>
+			<input type="hidden" name="num" value="<%=num%>">
 			<table border="1">
 				<tr>
 					<td>이미지 첨부파일</td>
 					<td>설정</td>
 				</tr>
 				<tr>
-					<td rowspan="8"><input type="file" id="file" name="file"> </td>
+					<td rowspan="8"><input type="file" id="file" name="file" value="<%=ibean.getFile()%>"> </td>
 					<td>제목</td>
 				</tr>
 				<tr>
-					<td><input type="text" id="title" name="title" required></td>
+					<td><input type="text" id="title" name="title" value="<%=ibean.getTitle() %>" required></td>
 				</tr>
 				<tr>
 					<td>게임 이름</td>
@@ -49,17 +57,33 @@
 					<td>가격</td>
 				</tr>
 				<tr>
-					<td><input type="text" name="price" required></td>
+					<td><input type="text" name="price" value="<%=ibean.getPrice() %>" required></td>
 				</tr>
 				<tr>
 					<td>거래 내용</td>
 				</tr>
 				<tr>
-					<td><textarea rows="10" cols="50" name="content" required></textarea></td>
+					<td><textarea rows="10" cols="50" name="content" required><%=ibean.getContent()%></textarea></td>
 				</tr>
 			</table>
-			<input type="submit" value="등록하기">
+			<input type="submit" value="수정하기">
+			<input type="button" value="목록으로" onclick="location.href='dealBoard.jsp'">
 		</form>
 	</fieldset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>

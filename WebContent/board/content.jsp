@@ -67,8 +67,10 @@
 		</tr>
 		<tr>
 			<td colspan="5">
-<%				
-				if(nickname.equals(bbean.getNickname())){
+
+<%					
+				
+				if(nickname !=null && nickname.equals(bbean.getNickname())){
 %>
 					<input type="button" value="수정하기" onclick="location.href='updateForm.jsp?num=<%=bbean.getNum()%>&pageNum=<%=pageNum%>';">
 					<input type="button" value="삭제하기" onclick="location.href='deleteForm.jsp?num=<%=bbean.getNum()%>&pageNum=<%=pageNum%>';">

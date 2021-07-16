@@ -1,6 +1,7 @@
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
-<%@page import="board.BoardDAO"%>
+<%@page import="item.ItemDAO"%>
+<%@page import="item.ItemBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,16 +13,16 @@
 <body>
 	<%
 		request.setCharacterEncoding("UTF-8");
+		
 		String pageNum = request.getParameter("pageNum");
-	%>
-	<jsp:useBean id="bbean" class="board.BoardBean"/>
-	<jsp:setProperty property="*" name="bbean"/>
-	
-	<%
+	%>	
+		<jsp:useBean id="ibean" class="item.ItemBean"/>
+		<jsp:setProperty property="*" name="ibean"/>
+	<%	
 		
 	int maxSize = 10 * 1024 * 1024; // 100MB
 	
-	String realPath = request.getRealPath("/upLoadFile");
+	String realPath = request.getRealPath("/upItemFile");
 	
 	
 	MultipartRequest multi = 
@@ -33,24 +34,25 @@
 							new DefaultFileRenamePolicy()
 							);
 	
-	bbean.setNum(Integer.parseInt(multi.getParameter("num")));
-	bbean.setNickname(multi.getParameter("nickname"));
-	bbean.setTitle(multi.getParameter("title"));
-	bbean.setFile(multi.getFilesystemName("file"));
-	bbean.setContent(multi.getParameter("content"));
-	bbean.setReadcount(Integer.parseInt(multi.getParameter("readcount")));
+	ibean.setNum(Integer.parseInt(multi.getParameter("num")));
+	ibean.setNickname(multi.getParameter("nickname"));
+	ibean.setTitle(multi.getParameter("title"));
+	ibean.setFile(multi.getFilesystemName("file"));
+	ibean.setGname(multi.getParameter("gname"));
+	ibean.setContent(multi.getParameter("content"));
+	ibean.setPrice(Integer.parseInt(multi.getParameter("price")));
 	// ip주소 추가
-	bbean.setIp(request.getRemoteAddr());
+	ibean.setIp(request.getRemoteAddr());
 		
-		BoardDAO bDAO = new BoardDAO();
+		ItemDAO iDAO = new ItemDAO();
 		
-		int check = bDAO.updateBoard(bbean);
+		int check = iDAO.iupdateBoard(ibean);
 		
 		if(check == 1){
 	%>
 		<script type="text/javascript">
 				alert("글정보를 수정했습니다.");
-				location.href = "boardList.jsp?pageNum=<%=pageNum%>";
+				location.href = "dealBoard.jsp?pageNum=<%=pageNum%>";
 		</script>
 	<%
 		}else if(check == 0){

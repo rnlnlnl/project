@@ -15,6 +15,7 @@
 	
 	String id = (String)session.getAttribute("id");
 	String nickname = (String)session.getAttribute("nickname");
+
 %>
 	
 <script type="text/javascript">
@@ -66,6 +67,7 @@
 <body>
 	
 	<button name="write" id="write" onclick="writeb();">글쓰기</button>
+	<input type="hidden" id="nickname" value="<%=nickname%>">
 	<table>
 		<tr>
 			<td>게임 이름</td>
@@ -81,7 +83,9 @@
 	%>	
 		<tr>
 			<td><%=ibean.getGname()%></td>
-			<td><a href="itemcontent.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>"><%=ibean.getTitle()%></a></td>
+			<td>
+				<a href="itemcontent.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>"><%=ibean.getTitle()%></a>
+			</td>
 			<td><%=ibean.getNickname()%></td>
 			<td><%=ibean.getDate()%></td>
 			<td><%=ibean.getReadcount()%></td>

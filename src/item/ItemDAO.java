@@ -3,6 +3,7 @@ package item;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -69,7 +70,7 @@ private Connection getConnection() throws Exception{
 		}finally {
 			closeAll(conn, pst, rs);
 		}
-		return 0;
+		return cnt;
 	}
 	
 	public ArrayList getItemList(int startRow, int pageSize){
@@ -80,11 +81,11 @@ private Connection getConnection() throws Exception{
 			
 			conn = getConnection();
 			
-			sql = "select * from item order by re_ref desc, asc limit ?,?";
+			sql = "select * from item order by re_ref desc, re_seq asc limit ?,?";
 			
 			pst = conn.prepareStatement(sql);
 			
-			pst.setInt(1, startRow);
+			pst.setInt(1, startRow-1);
 			pst.setInt(2, pageSize);
 			
 			rs = pst.executeQuery();
@@ -114,10 +115,10 @@ private Connection getConnection() throws Exception{
 		}finally {
 			closeAll(conn, pst, rs);
 		}
-		
 		return itemList;
 	}
 	
+	// 글 작성
 	public void insertItem(ItemBean ibean){
 		int num = 0;
 		
@@ -135,8 +136,8 @@ private Connection getConnection() throws Exception{
 				
 				num = rs.getInt(1)+1;
 				
-				sql = "insert into item (num, gname, nickname, title, content, readcount, re_ref,re_lev,"
-						+ "re_seq, date,ip,file,like,price) values(?,?,?,?,?,?,?,?,?,now(),?,?,?,?) ";
+				sql = "insert into item(num,gname,nickname,title,content,readcount,re_ref,re_lev,"
+						+ "re_seq,`date`,ip,`file`,`like`,price) values(?,?,?,?,?,?,?,?,?,now(),?,?,?,?)";
 				
 				pst = conn.prepareStatement(sql);
 				
@@ -157,13 +158,18 @@ private Connection getConnection() throws Exception{
 				pst.executeUpdate();
 				
 			}
-		} catch (Exception e) {
-			System.out.println("판매물품 등록에서 오류");
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버로드 실패");
+		}catch (SQLException e) {
+			System.out.println("DB연결 실패");
+		}catch (Exception e) {
+			System.out.println("글작성 실패");
 		}finally {
 			closeAll(conn, pst, rs);
 		}
 	}
 	
+	// 가격을 합쳐서 멤버십 등급 만들기
 	public int updateMemberShip(String nickname){
 		int memberShip = 0;
 		try {
@@ -181,7 +187,7 @@ private Connection getConnection() throws Exception{
 			if (rs.next()) {
 				memberShip = rs.getInt("sum(price)");
 			}
-			
+			System.out.println(rs.getInt("sum(price)"));
 		} catch (Exception e) {
 			System.out.println("멤버쉽 가지고 오는데에서 오류");
 		}finally {
@@ -195,6 +201,37 @@ private Connection getConnection() throws Exception{
 		
 		try {
 			
+			conn = getConnection();
+			
+			sql = "select * from item where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, num);
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				ibean = new ItemBean();
+				
+				ibean.setContent(rs.getString("content"));
+				ibean.setDate(rs.getDate("date"));
+				ibean.setFile(rs.getString("file"));
+				ibean.setGname(rs.getString("gname"));
+				ibean.setIp(rs.getString("ip"));
+				ibean.setLike(rs.getInt("like"));
+				ibean.setNickname(rs.getString("nickname"));
+				ibean.setNum(rs.getInt("num"));
+				ibean.setPrice(rs.getInt("price"));
+				ibean.setRe_lev(rs.getInt("re_lev"));
+				ibean.setRe_ref(rs.getInt("re_ref"));
+				ibean.setRe_seq(rs.getInt("re_seq"));
+				ibean.setReadcount(rs.getInt("readcount"));
+				ibean.setTitle(rs.getString("title"));
+				
+			}
+			
+			
 		} catch (Exception e) {
 			System.out.println("게시판 가져오기 실패");
 		}finally {
@@ -203,7 +240,52 @@ private Connection getConnection() throws Exception{
 		return ibean; 
 	}
 	
-	
+	public int iupdateBoard(ItemBean ibean){
+		
+		int check = 0;
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select nickname from item where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, ibean.getNum());
+			
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				
+				if (ibean.getNickname().equals(rs.getString("nickname"))) {
+					sql = "update item set file = ?, title = ?, gname = ?, price = ?, content = ?, nickname = ? where num = ?";
+					
+					pst = conn.prepareStatement(sql);
+					
+					pst.setString(1, ibean.getFile());
+					pst.setString(2, ibean.getTitle());
+					pst.setString(3, ibean.getGname());
+					pst.setInt(4, ibean.getPrice());
+					pst.setString(5, ibean.getContent());
+					pst.setString(6, ibean.getNickname());
+					pst.setInt(7, ibean.getNum());
+					
+					pst.executeUpdate();
+					check = 1;
+				}else{
+					check = 0;
+				}
+			}else{
+				check = -1;
+			}
+		} catch (Exception e) {
+			System.out.println("아이템 등록 업데이트에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
 	
 	
 	

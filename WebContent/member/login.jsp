@@ -7,7 +7,7 @@
 <title>로그인 페이지</title>
 </head>
 <body>
-	<a href="main.jsp"><img alt="gameItem" src="../image/logo.jpg"></a>
+	<a href="../main.jsp"><img alt="gameItem" src="../image/logo.jpg"></a>
 	
 	<fieldset>
 	  <legend>로그인</legend>

@@ -33,7 +33,8 @@
 		ibean.setTitle(multi.getParameter("title"));
 		ibean.setGname(multi.getParameter("gname"));
 		ibean.setPrice(Integer.parseInt(multi.getParameter("price")));
-		
+		ibean.setContent(multi.getParameter("content"));
+		// ip주소 추가
 		ibean.setIp(request.getRemoteAddr());
 		
 		ItemDAO iDAO = new ItemDAO();
