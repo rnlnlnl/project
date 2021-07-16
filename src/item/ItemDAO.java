@@ -287,7 +287,47 @@ private Connection getConnection() throws Exception{
 		return check;
 	}
 	
-	
+	// 아이템 판매 게시판 삭제
+	public int deleteItem(String nickname, int num){
+		int check = 0;
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "select nickname from item where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, num);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				if (nickname.equals(rs.getString("nickname"))) {
+					
+					sql = "delete from item where num = ?";
+					
+					pst = conn.prepareStatement(sql);
+					
+					pst.setInt(1, num);
+					
+					pst.executeUpdate();
+					check = 1;
+				}else{
+					check = 0;
+				}
+			}else{
+				check = -1;
+			}
+
+		} catch (Exception e) {
+			System.out.println("아이템 게시판 삭제에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return check;
+	}
 	
 	
 }
