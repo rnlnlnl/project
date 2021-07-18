@@ -17,7 +17,10 @@
 	String nickname = (String)session.getAttribute("nickname");
 
 %>
-	
+
+<jsp:useBean id="ibean" class="item.ItemBean"/>
+<jsp:setProperty property="*" name="ibean"/>
+
 <script type="text/javascript">
 	function writeb() {
 		var nickname = $("#nickname").val();
@@ -28,10 +31,44 @@
 		}
 	}
 	
+	if(id == "null"){
+		document.getElementById("adminCheck").hidden();
+	}else if (id != "admin") {
+		document.getElementById("adminCheck").hidden();
+	}else{
+		document.getElementById("adminCheck").disabled="";
+	}
+	
+	if(id == "null"){
+		document.getElementById("adminCheck1").hidden();
+	}else if (id != "admin") {
+		document.getElementById("adminCheck1").hidden();
+	}else{
+		document.getElementById("adminCheck1").disabled="";
+	}
+	
+	function acheck() {
+		var acheck = $("#itemSucces").val();
+		
+		$.ajax({
+			type="post",
+			url: "./itemdeal/acheck.jsp",
+			data: ({$("#itemSucces").val()
+			)},
+			success: function (achecked) {
+				if(achecked == true){
+					$("#itemSucces").checked;
+				}else if(achecked == false){
+					$("#itemSucces").checked.false;
+				}
+			}
+		});
+	}
+	
+	
 </script>
 	
-<jsp:useBean id="ibean" class="item.ItemBean"/>
-<jsp:setProperty property="*" name="ibean"/>
+
 <%
 	ItemDAO iDAO = new ItemDAO();
 
@@ -75,6 +112,8 @@
 			<td>작성자</td>
 			<td>작성일</td>
 			<td>등급</td>
+			<td id="adminCheck">관리자 거래물품 확인</td>
+			
 		</tr>
 	<%
 		if(cnt != 0){
@@ -89,6 +128,7 @@
 			<td><%=ibean.getNickname()%></td>
 			<td><%=ibean.getDate()%></td>
 			<td><%=ibean.getReadcount()%></td>
+			<td id="adminCheck1"><input type="checkbox" name="itemSucces" id="itemSucces" value="yes" onclick="acheck();">아이템 받음</td>
 		</tr>
 <%
 		}

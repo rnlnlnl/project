@@ -25,7 +25,7 @@
 	<%
 	}else if(id.equals("admin")){
 	%>
-		<a href="./member/admin.jsp">택배 관리</a>
+		<a href="./itemdeal/dealBoard.jsp">택배 관리</a>
 	<%
 	}else{
 	%>
