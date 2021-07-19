@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="itemboard.ReviewDAO"%>
+<%@page import="itemboard.ReviewBean"%>
 <%@page import="item.ItemBean"%>
 <%@page import="item.ItemDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -114,9 +117,35 @@
 		</tr>
 	</table>
 	
+	<hr>
 	
+	<%
+		ReviewDAO rDAO = new ReviewDAO();
+		ArrayList rbean = rDAO.getReview(num);
+		int rcnt = rDAO.getReviewCount();
+		
+	%>
+	<jsp:useBean id="rebean" class="itemboard.ReviewBean"/>
+	<jsp:setProperty property="*" name="rebean"/>
 	
-	
+	<table border="1">
+		<tr>
+			<td colspan="2"><h3>댓글</h3></td>
+		</tr>
+	<%
+		if(rcnt != 0){
+			for(int j = 0; j<rbean.size(); j++){
+				rebean = (ReviewBean)rbean.get(j);
+	%>
+		<tr>
+			<td><%=rebean.getTitle() %></td>
+			<td><%=rebean.getContent()%></td>
+		</tr>
+	<%
+			}
+		}
+	%>
+	</table>
 	
 	
 	

@@ -330,6 +330,61 @@ private Connection getConnection() throws Exception{
 		return check;
 	}
 	
+	public void reInsertBoard(ItemBean ibean){
+		int num = 0;
+		
+		try {
+			conn = getConnection();
+			
+			sql = "select max(num) from item";
+			
+			pst = conn.prepareStatement(sql);
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				num = rs.getInt(1)+1;
+			}
+			
+			sql = "update item set re_seq = re_seq + 1 "
+					+"where re_ref=? and re_seq>?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, ibean.getRe_ref());
+			pst.setInt(2, ibean.getRe_seq());
+			
+			pst.executeUpdate();
+			
+			sql = "insert into item values(?,?,?,?,?,?,?,?,?,now(),?,?,?,?,?)";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setInt(1, num);
+			pst.setString(2, ibean.getGname());
+			pst.setString(3, ibean.getNickname());
+			pst.setString(4, ibean.getTitle());
+			pst.setString(5, ibean.getContent());
+			pst.setInt(6, ibean.getReadcount());
+			pst.setInt(7, ibean.getRe_ref());
+			pst.setInt(8, ibean.getRe_lev());
+			pst.setInt(9, ibean.getRe_seq());
+			pst.setString(10, ibean.getIp());
+			pst.setString(11, ibean.getFile());
+			pst.setInt(12, ibean.getLike());
+			pst.setInt(13, ibean.getPrice());
+			pst.setString(14, ibean.getAcheck());
+			
+			pst.executeUpdate();
+			
+		} catch (Exception e) {
+			System.out.println("댓글달기 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+	}
+	
+	
 	public String adminCheck(String acheck, int num){
 		String achecked = "";
 		
