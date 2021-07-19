@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<img alt="error" src="./image/error.jpg" width="100%" height="100%">
+	<img alt="error" src="../image/error.jpg" width="100%" height="100%">
 </body>
 </html>

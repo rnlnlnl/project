@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="../js/jquery-3.6.0.min.js"></script>
+<jsp:include page="../headfoot/head.jsp"/>
 <title>거래소</title>
 
 <%
@@ -31,39 +32,24 @@
 		}
 	}
 	
-	if(id == "null"){
-		document.getElementById("adminCheck").hidden();
-	}else if (id != "admin") {
-		document.getElementById("adminCheck").hidden();
-	}else{
-		document.getElementById("adminCheck").disabled="";
-	}
-	
-	if(id == "null"){
-		document.getElementById("adminCheck1").hidden();
-	}else if (id != "admin") {
-		document.getElementById("adminCheck1").hidden();
-	}else{
-		document.getElementById("adminCheck1").disabled="";
-	}
-	
-	function acheck() {
-		var acheck = $("#itemSucces").val();
+<%-- 	function acheck() {
+		var acheck = $("#acheck").val();
 		
 		$.ajax({
-			type="post",
-			url: "./itemdeal/acheck.jsp",
-			data: ({$("#itemSucces").val()
-			)},
+			type: "post",
+			url: "${pageContext.request.contextPath}/itemdeal/acheck.jsp?num=<%=ibean.getNum()%>",
+			data: ({
+				like: $("#acheck").val()
+			}),
 			success: function (achecked) {
-				if(achecked == true){
-					$("#itemSucces").checked;
-				}else if(achecked == false){
-					$("#itemSucces").checked.false;
+				if(achecked == "checked"){
+					$("#acheck").checked;
+				}else if(achecked == null){
+					$("#acheck");
 				}
 			}
 		});
-	}
+	}  --%>
 	
 	
 </script>
@@ -107,13 +93,27 @@
 	<input type="hidden" id="nickname" value="<%=nickname%>">
 	<table>
 		<tr>
+			<%
+			if(id == null || !id.equals("admin")){
+			%>
+			<td>게임 이름</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>등급</td>
+			<td></td>
+			<%
+			}else if(id.equals("admin")){
+			%>
 			<td>게임 이름</td>
 			<td>제목</td>
 			<td>작성자</td>
 			<td>작성일</td>
 			<td>등급</td>
 			<td id="adminCheck">관리자 거래물품 확인</td>
-			
+			<%
+			}
+			%>
 		</tr>
 	<%
 		if(cnt != 0){
@@ -121,6 +121,10 @@
 				ibean = (ItemBean)itemList.get(i);
 	%>	
 		<tr>
+			
+			<%
+			if(id == null || !id.equals("admin")){
+			%>
 			<td><%=ibean.getGname()%></td>
 			<td>
 				<a href="itemcontent.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>"><%=ibean.getTitle()%></a>
@@ -128,7 +132,20 @@
 			<td><%=ibean.getNickname()%></td>
 			<td><%=ibean.getDate()%></td>
 			<td><%=ibean.getReadcount()%></td>
-			<td id="adminCheck1"><input type="checkbox" name="itemSucces" id="itemSucces" value="yes" onclick="acheck();">아이템 받음</td>
+			<%
+			}else if(id.equals("admin")){
+			%>
+			<td><%=ibean.getGname()%></td>
+			<td>
+				<a href="itemcontent.jsp?num=<%=ibean.getNum()%>&pageNum=<%=pageNum%>"><%=ibean.getTitle()%></a>
+			</td>
+			<td><%=ibean.getNickname()%></td>
+			<td><%=ibean.getDate()%></td>
+			<td><%=ibean.getReadcount()%></td>
+			<td id="adminCheck1"><input type="checkbox" name="acheck" id="acheck" value="checked">아이템 받음</td>
+			<%
+			}
+			%>
 		</tr>
 <%
 		}

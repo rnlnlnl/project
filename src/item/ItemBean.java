@@ -18,6 +18,7 @@ public class ItemBean {
 	private String file;
 	private int like;
 	private int price;
+	private String acheck;
 	
 	public int getPrice() {
 		return price;
@@ -104,22 +105,20 @@ public class ItemBean {
 	public void setLike(int like) {
 		this.like = like;
 	}
+	
+	public String getAcheck() {
+		return acheck;
+	}
+	public void setAcheck(String acheck) {
+		this.acheck = acheck;
+	}
 	@Override
 	public String toString() {
 		return "ItemBean [num=" + num + ", gname=" + gname + ", nickname=" + nickname + ", title=" + title
 				+ ", content=" + content + ", readcount=" + readcount + ", re_ref=" + re_ref + ", re_lev=" + re_lev
 				+ ", re_seq=" + re_seq + ", date=" + date + ", ip=" + ip + ", file=" + file + ", like=" + like
-				+ ", price=" + price + "]";
+				+ ", price=" + price + ", acheck=" + acheck + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

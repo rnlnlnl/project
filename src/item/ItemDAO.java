@@ -106,6 +106,7 @@ private Connection getConnection() throws Exception{
 				ibean.setTitle(rs.getString("title"));
 				ibean.setLike(rs.getInt("like"));
 				ibean.setPrice(rs.getInt("price"));
+				ibean.setAcheck(rs.getString("acheck"));
 				
 				itemList.add(ibean);
 			}
@@ -228,7 +229,7 @@ private Connection getConnection() throws Exception{
 				ibean.setRe_seq(rs.getInt("re_seq"));
 				ibean.setReadcount(rs.getInt("readcount"));
 				ibean.setTitle(rs.getString("title"));
-				
+				ibean.setAcheck(rs.getString("acheck"));
 			}
 			
 			
@@ -329,5 +330,27 @@ private Connection getConnection() throws Exception{
 		return check;
 	}
 	
+	public String adminCheck(String acheck, int num){
+		String achecked = "";
+		
+		try {
+			
+			conn = getConnection();
+			
+			sql = "update item set acheck = ? where num = ?";
+			
+			pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, acheck);
+			pst.setInt(2, num);
+			
+			pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("관리자 체크 에서 오류");
+		}finally {
+			closeAll(conn, pst, rs);
+		}
+		return achecked;
+	}
 	
 }

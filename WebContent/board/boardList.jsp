@@ -7,6 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<jsp:include page="../headfoot/head.jsp"/>
 <script src="../js/jquery-3.6.0.min.js"></script>
 <%
 	request.setCharacterEncoding("UTF-8");

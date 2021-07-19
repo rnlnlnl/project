@@ -5,6 +5,7 @@ public class LikeBean {
 	private String title;
 	private String ip;
 	private int like;
+	private String acheck;
 	
 	public String getId() {
 		return id;
@@ -30,9 +31,17 @@ public class LikeBean {
 	public void setLike(int like) {
 		this.like = like;
 	}
+	
+	public String getAcheck() {
+		return acheck;
+	}
+	public void setAcheck(String acheck) {
+		this.acheck = acheck;
+	}
 	@Override
 	public String toString() {
-		return "LikeBean [id=" + id + ", title=" + title + ", ip=" + ip + ", like=" + like + "]";
+		return "LikeBean [id=" + id + ", title=" + title + ", ip=" + ip + ", like=" + like + ", acheck=" + acheck + "]";
 	}
+	
 
 }
