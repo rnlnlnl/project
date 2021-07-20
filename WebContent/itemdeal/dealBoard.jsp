@@ -88,7 +88,7 @@
 
 </head>
 <body>
-	
+	<!-- 관리자가 물건을 밭았을시만 글이 보이게 만들기 -->
 	<button name="write" id="write" onclick="writeb();">글쓰기</button>
 	<input type="hidden" id="nickname" value="<%=nickname%>">
 	<table>

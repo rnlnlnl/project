@@ -171,22 +171,32 @@ private Connection getConnection() throws Exception{
 	}
 	
 	// 가격을 합쳐서 멤버십 등급 만들기
-	public int updateMemberShip(String nickname){
+	public int updateMemberShip(int num){
 		int memberShip = 0;
 		try {
 			
 			conn = getConnection();
 			
-			sql = "select sum(price) from item where nickname = ?";
+			sql = "select nickname from item where num = ?";
 			
 			pst = conn.prepareStatement(sql);
 			
-			pst.setString(1, nickname);
+			pst.setInt(1, num);
 			
 			rs = pst.executeQuery();
 			
 			if (rs.next()) {
-				memberShip = rs.getInt("sum(price)");
+				
+				sql = "select sum(price) from item where nickname = ?";
+				
+				pst = conn.prepareStatement(sql);
+				
+				pst.setString(1, rs.getString("nickname"));
+				
+				rs = pst.executeQuery();
+					if(rs.next()){
+					memberShip = rs.getInt("sum(price)");
+					}
 			}
 			System.out.println(rs.getInt("sum(price)"));
 		} catch (Exception e) {

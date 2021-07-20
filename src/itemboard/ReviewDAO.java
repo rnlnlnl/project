@@ -46,7 +46,7 @@ private Connection getConnection() throws Exception{
 			System.out.println("BoardDAO : closeAll(자원 반납 에러)"+e);
 		}
 	}
-	
+	//댓글 수파악
 	public int getReviewCount(){
 		int rcnt = 0;
 		
@@ -72,7 +72,7 @@ private Connection getConnection() throws Exception{
 	
 	
 	
-	
+	// 댓글 작성
 	public void reInsertBoard(ReviewBean rbean){
 		int renum = 0;
 		
@@ -123,13 +123,14 @@ private Connection getConnection() throws Exception{
 		}
 	}
 	
+	// item게시판에서 번호를 가져와 그번호에있는 글 가져오기
 	public ArrayList getReview(int num){
 		ArrayList rbean = new ArrayList();
 		
 		try {
 			conn = getConnection();
 			
-			sql = "select * from review where num = ?";
+			sql = "select * from review where num = ? order by renum";
 			
 			pst = conn.prepareStatement(sql);
 			

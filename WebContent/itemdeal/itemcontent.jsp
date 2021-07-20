@@ -24,7 +24,7 @@
 		
 		ItemDAO iDAO = new ItemDAO();
 		
-		int memberShip = iDAO.updateMemberShip(nickname);
+		int memberShip = iDAO.updateMemberShip(num);
 		
 		ItemBean ibean = iDAO.getBoard(num);
 		String imgFile = ibean.getFile();
@@ -32,7 +32,7 @@
 	%>
 	
 	<h3><%=ibean.getTitle()%></h3>
-	
+	<!-- 거래를 완료한것으로만 가격을 합쳐 등급 표시하기 -->
 	<table border="1">
 		<tr>
 			<td>판매 물품</td>
@@ -56,7 +56,7 @@
 					%>
 						<img alt="실버" src="../image/실버.png" width="30" height="30">
 					<%
-					}else if(memberShip > 500000 && memberShip <= 2000000){
+					}else if(memberShip > 500000 && memberShip <= 9999999){
 					%>
 						<img alt="골드" src="../image/골드.png" width="30" height="30">
 					<%
@@ -130,17 +130,18 @@
 	
 	<table border="1">
 		<tr>
-			<td colspan="2"><h3>댓글</h3></td>
+			<td colspan="3"><h3>댓글</h3></td>
 		</tr>
 	<%
 		if(rcnt != 0){
 			for(int j = 0; j<rbean.size(); j++){
 				rebean = (ReviewBean)rbean.get(j);
 	%>
-		<tr>
-			<td><%=rebean.getTitle() %></td>
-			<td><%=rebean.getContent()%></td>
-		</tr>
+				<tr>
+					<td><%=rebean.getRenum()%></td>
+					<td><%=rebean.getTitle()%></td>
+					<td><%=rebean.getContent()%></td>
+				</tr>
 	<%
 			}
 		}
