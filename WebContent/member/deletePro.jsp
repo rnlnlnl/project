@@ -15,13 +15,14 @@
 	int check = mDAO.deleteMember(nickname,pw); 
 	
 	if(check == 1){
+		session.invalidate();
 %>
 <script type="text/javascript">
 	alert("회원탈퇴 되셨습니다.");
 	location.href="../main.jsp";
 </script>
 <%
-	session.invalidate();
+	
 	}else{
 %>
 <script type="text/javascript">

@@ -64,6 +64,7 @@
 <title>아이템 거래소</title>
 </head>
 <body>
+<!-- 쿨엠에스API 전화번호로 문자 보내기 -->
 <a href="main.jsp"><img alt="gameItem" src="./image/logo.jpg"></a><br>
 <%
 	request.setCharacterEncoding("UTF-8");
